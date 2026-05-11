@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Strategy Call — 3rd I Visuals</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ── */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#1a1a1f; --bg2:#222228; --bg3:#2a2a32; --bg4:#32323c;
+  --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.14);
+  --orange:#E8531D; --orange2:#ff6a35; --orange-glow:rgba(232,83,29,0.18);
+  --text:#f0f0f0; --text2:#aaaabc; --text3:#666680;
+  --success:#22d3a0; --danger:#f06060;
+  --font:'Inter',sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh}
+
+/* ── Nav ── */
+nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 40px;background:rgba(26,26,31,0.95);
+  border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(10px);
+}
+.nav-logo{font-size:18px;font-weight:800;color:var(--text)}
+.nav-logo span{color:var(--orange)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{padding:9px 20px;background:var(--orange);color:#fff;border-radius:7px;font-size:14px;font-weight:700;text-decoration:none;transition:all 0.2s}
+.nav-cta:hover{background:var(--orange2)}
+
+/* ── Hero ── */
+.hero{
+  text-align:center;padding:64px 24px 40px;
+  background:radial-gradient(ellipse 800px 400px at 50% 0%,rgba(232,83,29,0.12) 0%,transparent 70%);
+}
+.hero-eyebrow{font-size:13px;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.1;letter-spacing:-1px;max-width:680px;margin:0 auto 16px}
+.hero h1 span{color:var(--orange)}
+.hero p{color:var(--text2);font-size:16px;max-width:520px;margin:0 auto 12px;line-height:1.7}
+.hero-meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.hero-badge{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text3)}
+.hero-badge span{color:var(--text2);font-weight:600}
+
+/* ── Booking Container ── */
+.booking-wrap{max-width:920px;margin:0 auto;padding:0 20px 80px}
+.booking-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:20px;overflow:hidden;display:grid;
+  grid-template-columns:1fr 1fr;
+}
+
+/* ── Calendar Panel ── */
+.cal-panel{padding:32px;border-right:1px solid var(--border)}
+.panel-title{font-size:13px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:20px}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.cal-month{font-size:15px;font-weight:700}
+.cal-arrow{
+  width:32px;height:32px;background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;cursor:pointer;color:var(--text2);font-size:16px;
+  display:flex;align-items:center;justify-content:center;transition:all 0.15s;
+}
+.cal-arrow:hover{border-color:var(--orange);color:var(--orange)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-header-cell{
+  text-align:center;font-size:10px;font-weight:700;color:var(--text3);
+  padding:6px 0;text-transform:uppercase;letter-spacing:0.5px;
+}
+.cal-day{
+  text-align:center;padding:9px 4px;border-radius:8px;font-size:13px;
+  cursor:pointer;color:var(--text2);transition:all 0.15s;border:1px solid transparent;
+}
+.cal-day:hover:not(.cal-day--disabled):not(.cal-day--empty):not(.cal-day--blocked){
+  background:var(--bg4);color:var(--text);
+}
+.cal-day--today{color:var(--orange);font-weight:700}
+.cal-day--selected{background:var(--orange) !important;color:#fff !important;font-weight:700;border-color:var(--orange)}
+.cal-day--disabled{color:var(--text3);cursor:not-allowed;opacity:0.35}
+.cal-day--blocked{color:var(--text3);cursor:not-allowed;text-decoration:line-through;opacity:0.45}
+.cal-day--empty{cursor:default}
+.cal-legend{display:flex;gap:14px;margin-top:16px;flex-wrap:wrap}
+.cal-legend-item{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:5px}
+
+/* ── Slots Panel ── */
+.slots-panel{padding:32px;display:flex;flex-direction:column}
+.tz-info{font-size:11px;color:var(--text3);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.tz-pill{background:var(--bg4);border:1px solid var(--border2);padding:2px 9px;border-radius:5px;color:var(--text2);font-size:11px;font-family:monospace}
+.slots-date{font-size:14px;font-weight:700;margin-bottom:16px;min-height:20px;color:var(--text2)}
+.slots-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1}
+.slot{
+  padding:10px 8px;background:var(--bg3);border:1px solid var(--border);
+  border-radius:8px;color:var(--text2);font-size:13px;text-align:center;
+  cursor:pointer;transition:all 0.15s;font-weight:500;
+}
+.slot:hover:not(.slot--taken){border-color:var(--orange);color:var(--orange);background:var(--orange-glow)}
+.slot--selected{background:var(--orange) !important;border-color:var(--orange) !important;color:#fff !important;font-weight:700}
+.slot--taken{color:var(--text3);cursor:not-allowed;background:var(--bg3);border-color:transparent;opacity:0.6}
+.slot--taken::after{content:'';display:inline-block;width:6px;height:6px;background:var(--danger);border-radius:50%;margin-left:6px;vertical-align:middle}
+.slots-empty{grid-column:1/-1;text-align:center;padding:28px 0;color:var(--text3);font-size:13px}
+.divider{height:1px;background:var(--border);margin:20px 0}
+.btn-continue{
+  width:100%;padding:13px;background:var(--orange);color:#fff;border:none;
+  border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;
+  transition:all 0.2s;font-family:var(--font);
+}
+.btn-continue:hover:not(:disabled){background:var(--orange2);transform:translateY(-1px)}
+.btn-continue:disabled{opacity:0.35;cursor:not-allowed}
+
+/* ── Step 2: Form ── */
+.form-step{display:none;max-width:520px;margin:0 auto;padding:0 20px 80px}
+.form-step.active{display:block;animation:slideUp 0.3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.step-back{
+  display:inline-flex;align-items:center;gap:6px;color:var(--text2);
+  font-size:13px;cursor:pointer;margin-bottom:28px;background:none;border:none;
+  font-family:var(--font);transition:color 0.2s;
+}
+.step-back:hover{color:var(--orange)}
+.form-heading{font-size:26px;font-weight:800;margin-bottom:6px}
+.form-sub{color:var(--text2);font-size:14px;margin-bottom:28px}
+.booking-summary{
+  background:var(--bg3);border:1px solid rgba(232,83,29,0.35);
+  border-radius:12px;padding:18px 22px;margin-bottom:28px;
+}
+.summary-row{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text2);margin-bottom:8px}
+.summary-row:last-child{margin-bottom:0}
+.summary-row strong{color:var(--text)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:0}
+.form-group.full{grid-column:1/-1}
+label{display:block;font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:6px}
+input,select,textarea{
+  width:100%;padding:11px 14px;background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;color:var(--text);font-size:14px;font-family:var(--font);
+  outline:none;transition:border-color 0.2s;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--orange)}
+select option{background:var(--bg3)}
+textarea{resize:vertical;min-height:88px}
+.form-actions{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.btn-primary{
+  padding:14px;background:var(--orange);color:#fff;border:none;border-radius:10px;
+  font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:var(--font);
+}
+.btn-primary:hover{background:var(--orange2);transform:translateY(-1px)}
+.btn-secondary{
+  padding:12px;background:var(--bg3);color:var(--text2);border:1px solid var(--border2);
+  border-radius:10px;font-size:14px;cursor:pointer;font-family:var(--font);
+}
+.btn-secondary:hover{color:var(--text);border-color:var(--border2)}
+
+/* ── Success ── */
+.success-wrap{text-align:center;padding:60px 20px 80px;max-width:520px;margin:0 auto;display:none}
+.success-wrap.active{display:block;animation:slideUp 0.3s ease}
+.success-icon{width:72px;height:72px;background:rgba(34,211,160,0.15);border:2px solid rgba(34,211,160,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-size:30px}
+.success-wrap h2{font-size:28px;font-weight:800;margin-bottom:10px}
+.success-wrap p{color:var(--text2);font-size:15px;line-height:1.7}
+.meet-btn{
+  display:inline-flex;align-items:center;gap:10px;margin-top:24px;
+  padding:14px 28px;background:var(--bg3);border:1px solid var(--orange);
+  border-radius:10px;color:var(--orange);font-size:15px;font-weight:700;
+  text-decoration:none;cursor:pointer;transition:all 0.2s;
+}
+.meet-btn:hover{background:var(--orange-glow)}
+.success-detail{margin-top:24px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px 22px;text-align:left}
+.success-detail-row{display:flex;gap:10px;font-size:13px;color:var(--text2);margin-bottom:8px}
+.success-detail-row:last-child{margin-bottom:0}
+.success-detail-row strong{color:var(--text);min-width:70px}
+
+/* ── Toast ── */
+#toast{
+  position:fixed;top:20px;right:20px;z-index:999;
+  background:var(--bg2);border:1px solid var(--border2);border-radius:10px;
+  padding:14px 20px;font-size:14px;max-width:320px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.3);display:none;
+}
+#toast.error{border-color:rgba(240,96,96,0.4);color:var(--danger)}
+#toast.success{border-color:rgba(34,211,160,0.4);color:var(--success)}
+
+/* ── Loading spinner ── */
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;margin-right:8px;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Footer ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:32px 40px;text-align:center;color:var(--text3);font-size:13px}
+footer a{color:var(--text2);text-decoration:none}
+footer a:hover{color:var(--orange)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>3rd I</span> Visuals</div>
+  <div class="nav-links">
+    <a href="https://3rdivisuals.com">Home</a>
+    <a href="https://3rdivisuals.com/about">About Us</a>
+    <a href="https://3rdivisuals.com/services">Services</a>
+    <a href="https://3rdivisuals.com/contact">Contact</a>
+  </div>
+  <a href="#" class="nav-cta">Book a Strategy Call</a>
+</nav>
+
+<!-- STEP 1: Calendar + Slots -->
+<div id="step-calendar">
+  <div class="hero">
+    <div class="hero-eyebrow">Free 30-Minute Strategy Session</div>
+    <h1>Book Your <span>3rd I</span> Strategy Call</h1>
+    <p>Let's discuss how we can build a scalable, results-driven growth engine for your brand.</p>
+    <div class="hero-meta">
+      <div class="hero-badge">✦ <span>30 min</span> video call</div>
+      <div class="hero-badge">✦ <span>Google Meet</span> link sent instantly</div>
+      <div class="hero-badge">✦ <span>Zero</span> commitment</div>
+    </div>
+  </div>
+
+  <div class="booking-wrap">
+    <div class="booking-card">
+      <!-- Calendar -->
+      <div class="cal-panel">
+        <div class="panel-title">Select a Date</div>
+        <div class="cal-nav">
+          <button class="cal-arrow" id="prev-month">‹</button>
+          <span class="cal-month" id="cal-month-label"></span>
+          <button class="cal-arrow" id="next-month">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid">
+          <div class="cal-header-cell">Su</div><div class="cal-header-cell">Mo</div>
+          <div class="cal-header-cell">Tu</div><div class="cal-header-cell">We</div>
+          <div class="cal-header-cell">Th</div><div class="cal-header-cell">Fr</div>
+          <div class="cal-header-cell">Sa</div>
+        </div>
+        <div class="cal-legend">
+          <div class="cal-legend-item"><span style="width:8px;height:8px;background:var(--orange);border-radius:50%;display:inline-block"></span> Available</div>
+          <div class="cal-legend-item"><span style="text-decoration:line-through;font-size:12px">20</span> Unavailable</div>
+        </div>
+      </div>
+
+      <!-- Slots -->
+      <div class="slots-panel">
+        <div class="tz-info">🌍 Showing times in: <span class="tz-pill" id="tz-label">detecting...</span></div>
+        <div class="slots-date" id="slots-date-label">← Pick a date to see available times</div>
+        <div class="slots-grid" id="slots-grid">
+          <div class="slots-empty">Select a date on the left</div>
+        </div>
+        <div class="divider"></div>
+        <button class="btn-continue" id="btn-continue" disabled>Continue →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: Contact Form -->
+<div class="form-step" id="step-form">
+  <button class="step-back" onclick="goBack()">← Back to calendar</button>
+  <div class="form-heading">Almost there!</div>
+  <div class="form-sub">Fill in your details and we'll have everything ready for your call.</div>
+
+  <div class="booking-summary" id="form-summary"></div>
+
+  <div class="form-grid">
+    <div class="form-group">
+      <label>Full name *</label>
+      <input type="text" id="f-name" placeholder="Alex Johnson" required>
+    </div>
+    <div class="form-group">
+      <label>Work email *</label>
+      <input type="email" id="f-email" placeholder="alex@company.com" required>
+    </div>
+    <div class="form-group">
+      <label>Phone number</label>
+      <input type="tel" id="f-phone" placeholder="+91 98765 43210">
+    </div>
+    <div class="form-group">
+      <label>Company name</label>
+      <input type="text" id="f-company" placeholder="Acme Corp">
+    </div>
+    <div class="form-group">
+      <label>Team / company size</label>
+      <select id="f-size">
+        <option value="">Select...</option>
+        <option>1-10 (Solo / Startup)</option>
+        <option>11-50 (Small business)</option>
+        <option>51-200 (Mid-market)</option>
+        <option>200+ (Enterprise)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Industry / niche</label>
+      <input type="text" id="f-industry" placeholder="E-Commerce, SaaS, etc.">
+    </div>
+    <div class="form-group full">
+      <label>What are you hoping to achieve? *</label>
+      <textarea id="f-goal" placeholder="Tell us about your brand, current challenges, and what success looks like for you..."></textarea>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn-primary" id="btn-book" onclick="submitBooking()">
+      Confirm my strategy call →
+    </button>
+    <button class="btn-secondary" onclick="goBack()">← Choose a different time</button>
+  </div>
+</div>
+
+<!-- STEP 3: Success -->
+<div class="success-wrap" id="step-success">
+  <div class="success-icon">✓</div>
+  <h2>You're booked! 🎉</h2>
+  <p>Your strategy call is confirmed. We've sent a calendar invite with the Google Meet link to <strong id="success-email"></strong></p>
+  <div class="success-detail">
+    <div class="success-detail-row"><strong>Date</strong><span id="sd-date"></span></div>
+    <div class="success-detail-row"><strong>Time</strong><span id="sd-time"></span></div>
+    <div class="success-detail-row"><strong>Format</strong><span>Google Meet (video call)</span></div>
+  </div>
+  <a href="#" class="meet-btn" id="success-meet-link" target="_blank">📹 Join Google Meet</a>
+  <p style="margin-top:20px;color:var(--text3);font-size:13px">Need to reschedule? Reply to your confirmation email.</p>
+</div>
+
+<div id="toast"></div>
+
+<footer>
+  <div style="margin-bottom:8px"><a href="https://3rdivisuals.com"><strong style="color:var(--text)"><span style="color:var(--orange)">3rd I</span> Visuals</strong></a></div>
+  <div>© 2025 3rd I Visuals. All rights reserved. &nbsp;·&nbsp; <a href="https://3rdivisuals.com/privacy">Privacy</a> &nbsp;·&nbsp; <a href="https://3rdivisuals.com/terms">Terms</a></div>
+</footer>
+
+<script>
+// ── Config ──────────────────────────────────────────────────
+const API = '/api';
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+// ── State ───────────────────────────────────────────────────
+let state = {
+  year: new Date().getFullYear(),
+  month: new Date().getMonth(),
+  selectedDate: null,
+  selectedSlot: null,
+  workingDays: new Set([1,2,3,4,5]), // Mon-Fri default (will load from API)
+  blockedDates: new Set(),
+  availableSlots: [],
+};
+
+// ── Init ────────────────────────────────────────────────────
+document.getElementById('tz-label').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+loadWorkingHours().then(() => renderCalendar());
+document.getElementById('prev-month').onclick = () => { changeMonth(-1); };
+document.getElementById('next-month').onclick = () => { changeMonth(1); };
+
+async function loadWorkingHours() {
+  try {
+    const r = await fetch(`${API}/working_hours`);
+    const data = await r.json();
+    state.workingDays = new Set(data.filter(d => d.is_active == 1).map(d => parseInt(d.day_of_week)));
+  } catch(e) { /* use defaults */ }
+}
+
+// ── Calendar ────────────────────────────────────────────────
+function changeMonth(dir) {
+  state.month += dir;
+  if (state.month > 11) { state.month = 0; state.year++; }
+  if (state.month < 0)  { state.month = 11; state.year--; }
+  renderCalendar();
+}
+
+function renderCalendar() {
+  document.getElementById('cal-month-label').textContent = MONTHS[state.month] + ' ' + state.year;
+  const grid  = document.getElementById('cal-grid');
+  const cells = grid.querySelectorAll('.cal-day');
+  cells.forEach(c => c.remove());
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const first = new Date(state.year, state.month, 1).getDay();
+  const days  = new Date(state.year, state.month + 1, 0).getDate();
+
+  for (let i = 0; i < first; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day cal-day--empty';
+    grid.appendChild(el);
+  }
+
+  for (let d = 1; d <= days; d++) {
+    const el   = document.createElement('div');
+    const date = new Date(state.year, state.month, d);
+    const ds   = toDateStr(state.year, state.month, d);
+    const dow  = date.getDay();
+
+    el.className = 'cal-day';
+    el.textContent = d;
+
+    const isPast    = date < today;
+    const isWorkday = state.workingDays.has(dow);
+    const isBlocked = state.blockedDates.has(ds);
+
+    if (isPast || !isWorkday)  { el.classList.add('cal-day--disabled'); }
+    else if (isBlocked)        { el.classList.add('cal-day--blocked'); }
+    else {
+      if (date.getTime() === today.getTime()) el.classList.add('cal-day--today');
+      if (state.selectedDate === ds)          el.classList.add('cal-day--selected');
+      el.onclick = () => selectDate(ds, d);
+    }
+    grid.appendChild(el);
+  }
+}
+
+async function selectDate(ds, day) {
+  state.selectedDate = ds;
+  state.selectedSlot = null;
+  updateContinueBtn();
+  renderCalendar();
+
+  const d = new Date(ds + 'T00:00:00');
+  document.getElementById('slots-date-label').textContent =
+    d.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'});
+
+  const grid = document.getElementById('slots-grid');
+  grid.innerHTML = '<div class="slots-empty">Loading...</div>';
+
+  try {
+    const r    = await fetch(`${API}/slots?date=${ds}`);
+    const data = await r.json();
+    state.availableSlots = data.slots || [];
+    renderSlots(state.availableSlots);
+  } catch(e) {
+    grid.innerHTML = '<div class="slots-empty" style="color:var(--danger)">Could not load slots. Please try again.</div>';
+  }
+}
+
+function renderSlots(slots) {
+  const grid = document.getElementById('slots-grid');
+  grid.innerHTML = '';
+
+  if (!slots.length) {
+    grid.innerHTML = '<div class="slots-empty">No available times on this date.</div>';
+    return;
+  }
+
+  slots.forEach(s => {
+    const btn   = document.createElement('button');
+    btn.className = 'slot';
+    btn.textContent = fmt12(s);
+    btn.onclick = () => {
+      state.selectedSlot = s;
+      document.querySelectorAll('.slot').forEach(b => b.classList.remove('slot--selected'));
+      btn.classList.add('slot--selected');
+      updateContinueBtn();
+    };
+    grid.appendChild(btn);
+  });
+}
+
+function updateContinueBtn() {
+  const btn = document.getElementById('btn-continue');
+  const ok  = state.selectedDate && state.selectedSlot;
+  btn.disabled = !ok;
+  if (ok) {
+    btn.onclick = goToForm;
+  }
+}
+
+// ── Step Navigation ─────────────────────────────────────────
+function goToForm() {
+  if (!state.selectedDate || !state.selectedSlot) return;
+  document.getElementById('step-calendar').style.display = 'none';
+  document.getElementById('step-form').classList.add('active');
+
+  const d = new Date(state.selectedDate + 'T00:00:00');
+  document.getElementById('form-summary').innerHTML = `
+    <div class="summary-row">📅 <strong>${d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</strong></div>
+    <div class="summary-row">⏰ <strong>${fmt12(state.selectedSlot)}</strong> · 30 minutes</div>
+    <div class="summary-row">📹 <strong>Google Meet</strong> link sent in your calendar invite</div>`;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function goBack() {
+  document.getElementById('step-form').classList.remove('active');
+  document.getElementById('step-calendar').style.display = '';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── Booking Submit ───────────────────────────────────────────
+async function submitBooking() {
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const goal  = document.getElementById('f-goal').value.trim();
+
+  if (!name)  { showToast('Please enter your name', 'error'); return; }
+  if (!email) { showToast('Please enter your email', 'error'); return; }
+  if (!goal)  { showToast('Please tell us your goal', 'error'); return; }
+
+  const btn = document.getElementById('btn-book');
+  btn.innerHTML = '<span class="spinner"></span> Booking...';
+  btn.disabled = true;
+
+  try {
+    const r = await fetch(`${API}/book`, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        name,
+        email,
+        phone:     document.getElementById('f-phone').value.trim(),
+        company:   document.getElementById('f-company').value.trim(),
+        team_size: document.getElementById('f-size').value,
+        goal,
+        date:      state.selectedDate,
+        time_slot: state.selectedSlot,
+      }),
+    });
+    const data = await r.json();
+
+    if (data.success) {
+      // Show success
+      document.getElementById('step-form').classList.remove('active');
+      const sc = document.getElementById('step-success');
+      sc.classList.add('active');
+      document.getElementById('success-email').textContent = email;
+      const d = new Date(state.selectedDate + 'T00:00:00');
+      document.getElementById('sd-date').textContent = d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+      document.getElementById('sd-time').textContent = fmt12(state.selectedSlot);
+      if (data.meet_link) {
+        document.getElementById('success-meet-link').href = data.meet_link;
+      }
+      window.scrollTo({top:0, behavior:'smooth'});
+    } else {
+      showToast(data.error || 'Something went wrong. Please try again.', 'error');
+      btn.innerHTML = 'Confirm my strategy call →';
+      btn.disabled = false;
+    }
+  } catch(e) {
+    showToast('Network error. Please try again.', 'error');
+    btn.innerHTML = 'Confirm my strategy call →';
+    btn.disabled = false;
+  }
+}
+
+// ── Helpers ─────────────────────────────────────────────────
+function toDateStr(y, m, d) {
+  return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
+function fmt12(t) {
+  const [hh,mm] = t.split(':').map(Number);
+  const h12 = hh % 12 || 12;
+  return `${h12}:${String(mm).padStart(2,'0')} ${hh < 12 ? 'AM' : 'PM'}`;
+}
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = type;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 4000);
+}
+</script>
+</body>
+</html>
