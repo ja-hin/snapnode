@@ -50,14 +50,15 @@ async function login() {
   btn.innerHTML = '<span class="spinner"></span> Signing in...';
   btn.disabled = true;
 
-  const res  = await fetch('/admin/login', {
+  const base = window.__BASE__ || '';
+  const res  = await fetch(base + '/admin/login', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ username: document.getElementById('u').value, password: document.getElementById('p').value })
   });
   const data = await res.json();
   if (data.success) {
-    window.location = '/admin';
+    window.location = base + '/admin';
   } else {
     err.style.display = 'block';
     btn.innerHTML = 'Sign in →';

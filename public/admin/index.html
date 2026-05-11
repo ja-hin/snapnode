@@ -179,7 +179,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   </div>
   <div class="sidebar-section">
     <div class="sidebar-label">Google</div>
-    <a href="/admin/oauth/connect" class="sidebar-item" id="sidebar-connect-google" style="display:none;border-color:rgba(232,83,29,0.4);background:var(--orange-glow);color:var(--orange)">
+    <a href="#" id="sidebar-connect-google" class="sidebar-item" style="display:none;border-color:rgba(232,83,29,0.4);background:var(--orange-glow);color:var(--orange)">
       <span class="sidebar-icon">🔗</span> Connect Google
     </a>
     <a href="#" class="sidebar-item" onclick="showView('calendar',this);return false">
@@ -200,8 +200,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
       <span class="status-dot offline" id="gcal-dot"></span>
       <span style="font-size:12px" id="gcal-status-text" style="color:var(--danger)">Google Not connected</span>
     </div>
-    <a href="/admin/logout" class="sidebar-logout">Sign out</a>
-    <a href="/" class="sidebar-logout" style="color:var(--text3)">← Booking page</a>
+    <a id="link-logout" href="#" class="sidebar-logout">Sign out</a>
+    <a id="link-home" href="#" class="sidebar-logout" style="color:var(--text3)">← Booking page</a>
   </div>
 </div>
 
@@ -247,7 +247,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
         <div class="oauth-card">
           <h3>Connect Google Calendar</h3>
           <p>Link your Google account to auto-create Meet links, sync bookings, and view your calendar here.</p>
-          <a href="/admin/oauth/connect" class="btn-google">
+          <a id="link-oauth-connect" href="#" class="btn-google">
             <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
             Connect Google Account
           </a>
@@ -258,7 +258,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
           <span style="font-size:15px;font-weight:700">Google Calendar</span>
           <div style="display:flex;gap:10px">
             <a href="https://calendar.google.com/calendar/r/week" target="_blank" class="btn-outline" style="font-size:12px;padding:7px 14px">↗ Open in Google</a>
-            <a href="/admin/oauth/disconnect" class="btn-outline" style="font-size:12px;padding:7px 14px;color:var(--danger)">Disconnect</a>
+            <a id="link-oauth-disconnect" href="#" class="btn-outline" style="font-size:12px;padding:7px 14px;color:var(--danger)">Disconnect</a>
           </div>
         </div>
         <iframe id="gcal-iframe" class="gcal-iframe" src="" frameborder="0" scrolling="no"></iframe>
@@ -407,21 +407,29 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 <div id="toast"></div>
 
 <script>
-const API = '/api';
+const BASE_URL = window.__BASE__ || '';
+const API = BASE_URL + '/api';
 let appData = {};
 let dayStates = {};
 let openDetailId = null;
 
 // ── Boot ─────────────────────────────────────────────────────
 async function init() {
+  // Set BASE-aware hrefs on static links
+  document.getElementById('link-logout').href        = BASE_URL + '/admin/logout';
+  document.getElementById('link-home').href          = BASE_URL + '/';
+  document.getElementById('link-oauth-connect').href = BASE_URL + '/admin/oauth/connect';
+  document.getElementById('link-oauth-disconnect').href = BASE_URL + '/admin/oauth/disconnect';
+  document.getElementById('sidebar-connect-google').href = BASE_URL + '/admin/oauth/connect';
+
   // Check for connected=1 param
   if (location.search.includes('connected=1')) {
     showToast('✅ Google Calendar connected!', 'success');
-    history.replaceState({}, '', '/admin');
+    history.replaceState({}, '', BASE_URL + '/admin');
   }
 
-  const res  = await fetch('/admin/data/init');
-  if (res.status === 401) { location = '/admin/login'; return; }
+  const res  = await fetch(BASE_URL + '/admin/data/init');
+  if (res.status === 401) { location = BASE_URL + '/admin/login'; return; }
   appData = await res.json();
 
   // Stats
@@ -481,7 +489,7 @@ function updateGcalUI(connected, calId) {
       `https://calendar.google.com/calendar/embed?src=${encodeURIComponent(calId)}&mode=WEEK&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&bgcolor=%23222228`;
     sText.textContent = '✅ Connected to Google';
     sSub.textContent  = 'Calendar ID: ' + calId;
-    sBtn.innerHTML    = '<a href="/admin/oauth/disconnect" class="btn-outline" style="font-size:12px;text-decoration:none">Disconnect</a>';
+    sBtn.innerHTML    = `<a href="${BASE_URL}/admin/oauth/disconnect" class="btn-outline" style="font-size:12px;text-decoration:none">Disconnect</a>`;
   } else {
     dot.classList.add('offline');
     text.textContent = 'Google Not connected'; text.style.color = 'var(--danger)';
@@ -491,7 +499,7 @@ function updateGcalUI(connected, calId) {
     calEmbed.style.display = 'none';
     sText.textContent = '⚠️ Not connected';
     sSub.textContent  = 'Connect to auto-generate Meet links on every booking.';
-    sBtn.innerHTML    = '<a href="/admin/oauth/connect" class="btn-save" style="text-decoration:none;font-size:13px">Connect Google →</a>';
+    sBtn.innerHTML    = `<a href="${BASE_URL}/admin/oauth/connect" class="btn-save" style="text-decoration:none;font-size:13px">Connect Google →</a>`;
   }
 }
 
