@@ -1,0 +1,752 @@
+<style>
+  .workflow-visual-panel {
+    padding: 96px 0;
+    background:
+      radial-gradient(circle at 18% 14%, rgba(255, 109, 53, 0.08), transparent 28%),
+      radial-gradient(circle at 82% 84%, rgba(255, 109, 53, 0.06), transparent 24%),
+      #f3f3f4;
+  }
+
+  .workflow-visual-panel * {
+    box-sizing: border-box;
+  }
+
+  .workflow-visual-panel .wrap {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .workflow-visual-panel .head {
+    max-width: 900px;
+    margin: 0 auto 34px;
+    text-align: center;
+  }
+
+  .workflow-visual-panel .kicker {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 109, 53, 0.10);
+    color: #ff6d35;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .workflow-visual-panel .head h2 {
+    margin: 0;
+    color: #111214;
+    font-size: clamp(2.15rem, 5vw, 4.8rem);
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+    font-weight: 800;
+  }
+
+  .workflow-visual-panel .head p {
+    max-width: 760px;
+    margin: 18px auto 0;
+    color: #666a73;
+    font-size: 1.03rem;
+    line-height: 1.72;
+  }
+
+  .workflow-visual-panel .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 38px;
+  }
+
+  .workflow-visual-panel .problem-card {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(17, 18, 20, 0.06);
+    border-radius: 26px;
+    padding: 22px 22px 20px;
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(8px);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .workflow-visual-panel .problem-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.08);
+  }
+
+  .workflow-visual-panel .problem-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, #fff1ea 0%, #fde6db 100%);
+    color: #ff6d35;
+    font-size: 1.25rem;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px rgba(255, 109, 53, 0.12);
+  }
+
+  .workflow-visual-panel .problem-card h3 {
+    margin: 0 0 8px;
+    color: #111214;
+    font-size: 1.08rem;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .workflow-visual-panel .problem-card p {
+    margin: 0;
+    color: #5f6470;
+    font-size: 0.96rem;
+    line-height: 1.55;
+    min-height: 48px;
+  }
+
+  .workflow-visual-panel .problem-chip {
+    display: inline-flex;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: #f6f7f8;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+    color: #7a7f89;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .workflow-visual-panel .visual-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .workflow-visual-panel .scene {
+    position: relative;
+    min-height: 560px;
+    border-radius: 30px;
+    overflow: hidden;
+    padding: 28px;
+  }
+
+  .workflow-visual-panel .scene.old {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.78) 0%, rgba(255,255,255,0.96) 100%);
+    border: 1px solid rgba(17,18,20,0.07);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.05);
+  }
+
+  .workflow-visual-panel .scene.new {
+    background:
+      radial-gradient(circle at 85% 86%, rgba(255,109,53,0.20), transparent 20%),
+      linear-gradient(180deg, #17181b 0%, #101114 100%);
+    color: #fff;
+    box-shadow: 0 26px 62px rgba(0,0,0,0.16);
+  }
+
+  .workflow-visual-panel .scene-top {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 26px;
+  }
+
+  .workflow-visual-panel .scene-label {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .workflow-visual-panel .scene.old .scene-label {
+    background: #ececee;
+    color: #7a808a;
+  }
+
+  .workflow-visual-panel .scene.new .scene-label {
+    background: rgba(255,109,53,0.14);
+    color: #ff8a5d;
+  }
+
+  .workflow-visual-panel .scene h3 {
+    margin: 0 0 12px;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    font-weight: 800;
+  }
+
+  .workflow-visual-panel .scene.old h3 {
+    color: #111214;
+  }
+
+  .workflow-visual-panel .scene.new h3 {
+    color: #fff;
+  }
+
+  .workflow-visual-panel .scene p {
+    margin: 0;
+    max-width: 560px;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .workflow-visual-panel .scene.old p {
+    color: #646a75;
+  }
+
+  .workflow-visual-panel .scene.new p {
+    color: rgba(255,255,255,0.76);
+  }
+
+  .workflow-visual-panel .inbox-stage {
+    position: relative;
+    z-index: 2;
+    height: 290px;
+    margin-top: 8px;
+  }
+
+  .workflow-visual-panel .mail-stack {
+    position: absolute;
+    left: 0;
+    top: 26px;
+    width: 120px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .workflow-visual-panel .mail {
+    height: 42px;
+    border-radius: 14px;
+    position: relative;
+  }
+
+  .workflow-visual-panel .scene.old .mail {
+    background: #edf0f4;
+    border: 1px solid rgba(17,18,20,0.06);
+  }
+
+  .workflow-visual-panel .scene.new .mail {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .workflow-visual-panel .mail::before,
+  .workflow-visual-panel .mail::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    border-radius: 999px;
+  }
+
+  .workflow-visual-panel .mail::before {
+    top: 13px;
+  }
+
+  .workflow-visual-panel .mail::after {
+    top: 21px;
+    right: 28px;
+  }
+
+  .workflow-visual-panel .scene.old .mail::before,
+  .workflow-visual-panel .scene.old .mail::after {
+    background: #c7ccd5;
+  }
+
+  .workflow-visual-panel .scene.new .mail::before,
+  .workflow-visual-panel .scene.new .mail::after {
+    background: rgba(255,255,255,0.28);
+  }
+
+  .workflow-visual-panel .person-node,
+  .workflow-visual-panel .ai-node {
+    position: absolute;
+    top: 74px;
+    width: 128px;
+    height: 128px;
+    border-radius: 28px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 14px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+
+  .workflow-visual-panel .person-node {
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    border: 1px solid rgba(17,18,20,0.08);
+    box-shadow: 0 14px 38px rgba(0,0,0,0.06);
+    color: #22252b;
+  }
+
+  .workflow-visual-panel .person-node::before {
+    content: "👤";
+    display: block;
+    font-size: 1.55rem;
+    margin-bottom: 8px;
+  }
+
+  .workflow-visual-panel .ai-node {
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.18);
+    color: #fff;
+  }
+
+  .workflow-visual-panel .ai-node::before {
+    content: "AI";
+    display: inline-grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    margin: 0 auto 10px;
+    background: rgba(255,109,53,0.14);
+    border: 1px solid rgba(255,109,53,0.22);
+    color: #ff8a5d;
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .workflow-visual-panel .output-zone {
+    position: absolute;
+    right: 0;
+    top: 48px;
+    width: 170px;
+    display: grid;
+    gap: 14px;
+  }
+
+  .workflow-visual-panel .output-item {
+    min-height: 54px;
+    border-radius: 16px;
+    display: grid;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .workflow-visual-panel .scene.old .output-item {
+    background: #f3f4f6;
+    border: 1px solid rgba(17,18,20,0.06);
+    color: #434955;
+  }
+
+  .workflow-visual-panel .scene.new .output-item {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.09);
+    color: #fff;
+  }
+
+  .workflow-visual-panel .scene.old .output-item:nth-child(2) {
+    opacity: 0.88;
+  }
+
+  .workflow-visual-panel .scene.old .output-item:nth-child(3) {
+    opacity: 0.72;
+  }
+
+  .workflow-visual-panel .scene.new .output-item.good {
+    border-color: rgba(255,109,53,0.22);
+    box-shadow: inset 0 0 0 1px rgba(255,109,53,0.10);
+  }
+
+  .workflow-visual-panel .connector {
+    position: absolute;
+    top: 132px;
+    height: 2px;
+    transform-origin: left center;
+  }
+
+  .workflow-visual-panel .scene.old .connector {
+    background: linear-gradient(90deg, #d6dae1 0%, #c7ccd4 100%);
+  }
+
+  .workflow-visual-panel .scene.new .connector {
+    background: linear-gradient(90deg, rgba(255,255,255,0.18) 0%, rgba(255,109,53,0.65) 100%);
+  }
+
+  .workflow-visual-panel .connector::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid;
+    border-right: 2px solid;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .workflow-visual-panel .scene.old .connector::after {
+    border-color: #c7ccd4;
+  }
+
+  .workflow-visual-panel .scene.new .connector::after {
+    border-color: #ff8a5d;
+  }
+
+  .workflow-visual-panel .connector.mail-to-core {
+    left: 120px;
+    width: calc(50% - 184px);
+  }
+
+  .workflow-visual-panel .connector.core-to-output {
+    left: calc(50% + 64px);
+    width: calc(50% - 152px);
+  }
+
+  .workflow-visual-panel .bottleneck {
+    position: absolute;
+    left: calc(50% - 85px);
+    top: 218px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .workflow-visual-panel .scene.old .bottleneck {
+    background: #fff0ea;
+    color: #ff6d35;
+    border: 1px solid rgba(255,109,53,0.16);
+  }
+
+  .workflow-visual-panel .scene.new .bottleneck {
+    background: rgba(255,109,53,0.14);
+    color: #ff8a5d;
+    border: 1px solid rgba(255,109,53,0.18);
+  }
+
+  .workflow-visual-panel .insight-row {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .workflow-visual-panel .insight-box {
+    border-radius: 20px;
+    padding: 16px 16px 15px;
+  }
+
+  .workflow-visual-panel .scene.old .insight-box {
+    background: rgba(255,255,255,0.68);
+    border: 1px solid rgba(17,18,20,0.06);
+  }
+
+  .workflow-visual-panel .scene.new .insight-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .workflow-visual-panel .insight-box strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .workflow-visual-panel .scene.old .insight-box strong {
+    color: #8b919a;
+  }
+
+  .workflow-visual-panel .scene.new .insight-box strong {
+    color: #ff9a74;
+  }
+
+  .workflow-visual-panel .insight-box span {
+    display: block;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    font-weight: 700;
+  }
+
+  .workflow-visual-panel .scene.old .insight-box span {
+    color: #313742;
+  }
+
+  .workflow-visual-panel .scene.new .insight-box span {
+    color: #fff;
+  }
+
+  .workflow-visual-panel .result-line {
+    position: relative;
+    z-index: 2;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(17,18,20,0.08);
+    font-size: 1rem;
+    line-height: 1.55;
+    font-weight: 700;
+  }
+
+  .workflow-visual-panel .scene.old .result-line {
+    color: #666c77;
+  }
+
+  .workflow-visual-panel .scene.new .result-line {
+    color: rgba(255,255,255,0.82);
+    border-top-color: rgba(255,255,255,0.08);
+  }
+
+  .workflow-visual-panel .result-line strong {
+    color: #111214;
+  }
+
+  .workflow-visual-panel .scene.new .result-line strong {
+    color: #fff;
+  }
+
+  @media (max-width: 1080px) {
+    .workflow-visual-panel .problem-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .workflow-visual-panel .visual-compare {
+      grid-template-columns: 1fr;
+    }
+
+    .workflow-visual-panel .scene {
+      min-height: 520px;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .workflow-visual-panel {
+      padding: 72px 0;
+    }
+
+    .workflow-visual-panel .wrap {
+      width: min(1180px, calc(100% - 24px));
+    }
+
+    .workflow-visual-panel .problem-head h2 {
+      font-size: 2.45rem;
+    }
+
+    .workflow-visual-panel .problem-head p {
+      font-size: 0.96rem;
+      line-height: 1.68;
+    }
+
+    .workflow-visual-panel .problem-grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .workflow-visual-panel .scene {
+      padding: 22px;
+      min-height: 660px;
+      border-radius: 24px;
+    }
+
+    .workflow-visual-panel .mail-stack {
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      grid-template-columns: repeat(3, 1fr);
+      display: grid;
+      margin-bottom: 20px;
+    }
+
+    .workflow-visual-panel .inbox-stage {
+      height: auto;
+    }
+
+    .workflow-visual-panel .person-node,
+    .workflow-visual-panel .ai-node {
+      position: relative;
+      left: 0;
+      top: 0;
+      transform: none;
+      margin: 0 auto 18px;
+    }
+
+    .workflow-visual-panel .output-zone {
+      position: relative;
+      right: 0;
+      top: 0;
+      width: 100%;
+      margin-top: 10px;
+      grid-template-columns: 1fr;
+    }
+
+    .workflow-visual-panel .connector {
+      display: none;
+    }
+
+    .workflow-visual-panel .bottleneck {
+      position: relative;
+      left: 0;
+      top: 0;
+      display: inline-flex;
+      margin: 0 auto 18px;
+    }
+
+    .workflow-visual-panel .insight-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<section class="workflow-visual-panel">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">Why it matters</div>
+      <h2>Slow, inconsistent email handling quietly drains productivity and revenue.</h2>
+      <p>
+        When every reply depends on human availability, memory, and drafting effort,
+        response speed and quality become difficult to scale.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+      <article class="problem-card">
+        <div class="problem-icon">⏱</div>
+        <h3>Delays</h3>
+        <p>Replies wait on people.</p>
+        <div class="problem-chip">Busy · Off-shift · Time zone</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">≋</div>
+        <h3>Inconsistency</h3>
+        <p>Tone and quality vary by person.</p>
+        <div class="problem-chip">Different styles · Different answers</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">⌘</div>
+        <h3>Context Loss</h3>
+        <p>Thread history gets missed.</p>
+        <div class="problem-chip">Attachments · Prior decisions · Nuance</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">↗</div>
+        <h3>Scaling Cost</h3>
+        <p>More volume means more overhead.</p>
+        <div class="problem-chip">Hiring · Training · Supervision</div>
+      </article>
+    </div>
+
+    <div class="visual-compare">
+      <article class="scene old">
+        <div class="scene-top">
+          <div class="scene-label">Traditional workflow</div>
+          <h3>Human-only inbox handling</h3>
+          <p>Every message must pass through one person’s time, memory, and drafting effort.</p>
+        </div>
+
+        <div class="inbox-stage">
+          <div class="mail-stack">
+            <div class="mail"></div>
+            <div class="mail"></div>
+            <div class="mail"></div>
+          </div>
+
+          <div class="connector mail-to-core"></div>
+          <div class="person-node">One person</div>
+          <div class="connector core-to-output"></div>
+
+          <div class="output-zone">
+            <div class="output-item">Reply 1</div>
+            <div class="output-item">Reply 2</div>
+            <div class="output-item">Reply 3</div>
+          </div>
+
+          <div class="bottleneck">Single bottleneck</div>
+        </div>
+
+        <div class="insight-row">
+          <div class="insight-box">
+            <strong>What happens</strong>
+            <span>More rework, more waiting, more variation.</span>
+          </div>
+          <div class="insight-box">
+            <strong>What it needs</strong>
+            <span>More people as volume increases.</span>
+          </div>
+        </div>
+
+        <div class="result-line">
+          <strong>Result:</strong> slower response cycles and inconsistent output quality.
+        </div>
+      </article>
+
+      <article class="scene new">
+        <div class="scene-top">
+          <div class="scene-label">Better model</div>
+          <h3>AI-assisted email handling</h3>
+          <p>The system handles the heavy lifting first. Humans supervise only where needed.</p>
+        </div>
+
+        <div class="inbox-stage">
+          <div class="mail-stack">
+            <div class="mail"></div>
+            <div class="mail"></div>
+            <div class="mail"></div>
+          </div>
+
+          <div class="connector mail-to-core"></div>
+          <div class="ai-node">Agentic AI</div>
+          <div class="connector core-to-output"></div>
+
+          <div class="output-zone">
+            <div class="output-item good">Context-aware reply</div>
+            <div class="output-item good">Faster follow-up</div>
+            <div class="output-item good">Human takeover if needed</div>
+          </div>
+
+          <div class="bottleneck">Scales far better</div>
+        </div>
+
+        <div class="insight-row">
+          <div class="insight-box">
+            <strong>What changes</strong>
+            <span>Faster first responses with more consistency.</span>
+          </div>
+          <div class="insight-box">
+            <strong>What it enables</strong>
+            <span>One person supervises far more output.</span>
+          </div>
+        </div>
+
+        <div class="result-line">
+          <strong>Result:</strong> more throughput, less manual load, better response quality at scale.
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

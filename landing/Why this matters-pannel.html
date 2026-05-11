@@ -1,0 +1,602 @@
+<style>
+  .email-problem-panel {
+    padding: 96px 0;
+    background:
+      radial-gradient(circle at 18% 14%, rgba(255, 109, 53, 0.08), transparent 28%),
+      radial-gradient(circle at 82% 84%, rgba(255, 109, 53, 0.06), transparent 24%),
+      #f3f3f4;
+  }
+
+  .email-problem-panel * {
+    box-sizing: border-box;
+  }
+
+  .email-problem-panel .problem-wrap {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .email-problem-panel .problem-head {
+    max-width: 900px;
+    margin: 0 auto 34px;
+    text-align: center;
+  }
+
+  .email-problem-panel .problem-kicker {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 109, 53, 0.10);
+    color: #ff6d35;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .email-problem-panel .problem-head h2 {
+    margin: 0;
+    color: #111214;
+    font-size: clamp(2.2rem, 5vw, 4.9rem);
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+    font-weight: 800;
+  }
+
+  .email-problem-panel .problem-head h2 span {
+    color: #111214;
+  }
+
+  .email-problem-panel .problem-head p {
+    max-width: 780px;
+    margin: 18px auto 0;
+    color: #666a73;
+    font-size: 1.03rem;
+    line-height: 1.72;
+  }
+
+  .email-problem-panel .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 38px;
+  }
+
+  .email-problem-panel .problem-card {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(17, 18, 20, 0.06);
+    border-radius: 26px;
+    padding: 22px 22px 20px;
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(8px);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .email-problem-panel .problem-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.08);
+  }
+
+  .email-problem-panel .problem-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, #fff1ea 0%, #fde6db 100%);
+    color: #ff6d35;
+    font-size: 1.25rem;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px rgba(255, 109, 53, 0.12);
+  }
+
+  .email-problem-panel .problem-card h3 {
+    margin: 0 0 8px;
+    color: #111214;
+    font-size: 1.08rem;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .email-problem-panel .problem-card p {
+    margin: 0;
+    color: #5f6470;
+    font-size: 0.96rem;
+    line-height: 1.55;
+    min-height: 48px;
+  }
+
+  .email-problem-panel .problem-chip {
+    display: inline-flex;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: #f6f7f8;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+    color: #7a7f89;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .email-problem-panel .process-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .email-problem-panel .process-card {
+    border-radius: 28px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .email-problem-panel .process-card.old {
+    background: #ffffff;
+    border: 1px solid rgba(17, 18, 20, 0.07);
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.04);
+  }
+
+  .email-problem-panel .process-card.new {
+    background: linear-gradient(180deg, #1a1a1d 0%, #111214 100%);
+    color: #fff;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+  }
+
+  .email-problem-panel .process-card.new::after {
+    content: "";
+    position: absolute;
+    right: -50px;
+    bottom: -50px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(255,109,53,0.22) 0%, rgba(255,109,53,0) 70%);
+    pointer-events: none;
+  }
+
+  .email-problem-panel .process-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .email-problem-panel .process-card.old .process-label {
+    background: #f4f4f5;
+    color: #6a6f78;
+  }
+
+  .email-problem-panel .process-card.new .process-label {
+    background: rgba(255, 109, 53, 0.14);
+    color: #ff8a5d;
+  }
+
+  .email-problem-panel .process-card h4 {
+    margin: 0 0 10px;
+    font-size: 1.35rem;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+  }
+
+  .email-problem-panel .process-card.old h4 {
+    color: #111214;
+  }
+
+  .email-problem-panel .process-card.new h4 {
+    color: #fff;
+  }
+
+  .email-problem-panel .process-sub {
+    margin: 0 0 18px;
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .email-problem-panel .process-card.old .process-sub {
+    color: #616773;
+  }
+
+  .email-problem-panel .process-card.new .process-sub {
+    color: rgba(255,255,255,0.76);
+  }
+
+  .email-problem-panel .process-flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .email-problem-panel .process-flow::-webkit-scrollbar {
+    display: none;
+  }
+
+  .email-problem-panel .flow-step {
+    flex: 0 0 auto;
+    min-width: 108px;
+    min-height: 92px;
+    border-radius: 22px;
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .email-problem-panel .process-card.old .flow-step {
+    background: #f6f7f8;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+  }
+
+  .email-problem-panel .process-card.new .flow-step {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .email-problem-panel .step-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .email-problem-panel .process-card.old .step-icon {
+    background: #ffffff;
+    color: #7a818d;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+  }
+
+  .email-problem-panel .process-card.new .step-icon {
+    background: rgba(255,109,53,0.14);
+    color: #ff8a5d;
+    border: 1px solid rgba(255,109,53,0.18);
+  }
+
+  .email-problem-panel .step-text {
+    font-size: 0.86rem;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  .email-problem-panel .process-card.old .step-text {
+    color: #2b2f37;
+  }
+
+  .email-problem-panel .process-card.new .step-text {
+    color: #fff;
+  }
+
+  .email-problem-panel .flow-arrow {
+    flex: 0 0 auto;
+    font-size: 1rem;
+    font-weight: 700;
+    opacity: 0.55;
+    transform: translateY(-2px);
+  }
+
+  .email-problem-panel .process-card.old .flow-arrow {
+    color: #8c919a;
+  }
+
+  .email-problem-panel .process-card.new .flow-arrow {
+    color: #ff8a5d;
+    opacity: 0.8;
+  }
+
+  .email-problem-panel .process-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .email-problem-panel .meta-box {
+    border-radius: 18px;
+    padding: 14px 14px 13px;
+  }
+
+  .email-problem-panel .process-card.old .meta-box {
+    background: #f8f8f9;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+  }
+
+  .email-problem-panel .process-card.new .meta-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .email-problem-panel .meta-title {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .email-problem-panel .process-card.old .meta-title {
+    color: #8a8f98;
+  }
+
+  .email-problem-panel .process-card.new .meta-title {
+    color: #ff9a74;
+  }
+
+  .email-problem-panel .meta-text {
+    font-size: 0.92rem;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+
+  .email-problem-panel .process-card.old .meta-text {
+    color: #2f3440;
+  }
+
+  .email-problem-panel .process-card.new .meta-text {
+    color: #fff;
+  }
+
+  .email-problem-panel .impact-line {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(17,18,20,0.08);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    font-weight: 600;
+  }
+
+  .email-problem-panel .process-card.new .impact-line {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.82);
+  }
+
+  .email-problem-panel .process-card.old .impact-line {
+    color: #646a75;
+  }
+
+  .email-problem-panel .impact-line strong {
+    color: #111214;
+  }
+
+  .email-problem-panel .process-card.new .impact-line strong {
+    color: #fff;
+  }
+
+  @media (max-width: 1080px) {
+    .email-problem-panel .problem-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .email-problem-panel .process-compare {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .email-problem-panel {
+      padding: 72px 0;
+    }
+
+    .email-problem-panel .problem-wrap {
+      width: min(1180px, calc(100% - 24px));
+    }
+
+    .email-problem-panel .problem-head {
+      margin-bottom: 28px;
+    }
+
+    .email-problem-panel .problem-head h2 {
+      font-size: 2.45rem;
+    }
+
+    .email-problem-panel .problem-head p {
+      font-size: 0.96rem;
+      line-height: 1.68;
+    }
+
+    .email-problem-panel .problem-grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .email-problem-panel .problem-card,
+    .email-problem-panel .process-card {
+      border-radius: 22px;
+    }
+
+    .email-problem-panel .process-card {
+      padding: 22px;
+    }
+
+    .email-problem-panel .flow-step {
+      min-width: 96px;
+      min-height: 88px;
+      border-radius: 18px;
+    }
+
+    .email-problem-panel .process-meta {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<section class="email-problem-panel" id="why-it-matters">
+  <div class="problem-wrap">
+    <div class="problem-head">
+      <div class="problem-kicker">Why it matters</div>
+      <h2>
+        Slow, inconsistent email handling quietly drains
+        <span>productivity and revenue.</span>
+      </h2>
+      <p>
+        When every reply depends on human availability, memory, and drafting effort,
+        response speed and quality become difficult to scale.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+      <article class="problem-card">
+        <div class="problem-icon">⏱</div>
+        <h3>Delays</h3>
+        <p>Replies wait on people.</p>
+        <div class="problem-chip">Busy · Off-shift · Time zone</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">≋</div>
+        <h3>Inconsistency</h3>
+        <p>Tone and quality vary by person.</p>
+        <div class="problem-chip">Different styles · Different answers</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">⌘</div>
+        <h3>Context Loss</h3>
+        <p>Thread history gets missed.</p>
+        <div class="problem-chip">Attachments · Prior decisions · Nuance</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">↗</div>
+        <h3>Scaling Cost</h3>
+        <p>More volume means more overhead.</p>
+        <div class="problem-chip">Hiring · Training · Supervision</div>
+      </article>
+    </div>
+
+    <div class="process-compare">
+      <article class="process-card old">
+        <div class="process-label">Traditional workflow</div>
+        <h4>Human-only inbox handling</h4>
+        <p class="process-sub">
+          Every message goes through the same repeated manual chain.
+        </p>
+
+        <div class="process-flow">
+          <div class="flow-step">
+            <div class="step-icon">01</div>
+            <div class="step-text">Read email</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">02</div>
+            <div class="step-text">Recall context</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">03</div>
+            <div class="step-text">Search facts</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">04</div>
+            <div class="step-text">Draft reply</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">05</div>
+            <div class="step-text">Recheck tone</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">06</div>
+            <div class="step-text">Send</div>
+          </div>
+        </div>
+
+        <div class="process-meta">
+          <div class="meta-box">
+            <span class="meta-title">What happens</span>
+            <span class="meta-text">More rework, more waiting, more variation.</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-title">What it needs</span>
+            <span class="meta-text">More people as volume increases.</span>
+          </div>
+        </div>
+
+        <div class="impact-line">
+          <strong>Result:</strong> slower response cycles and inconsistent output quality.
+        </div>
+      </article>
+
+      <article class="process-card new">
+        <div class="process-label">Better model</div>
+        <h4>AI-assisted email handling</h4>
+        <p class="process-sub">
+          The system does the heavy lifting first. Humans supervise only where needed.
+        </p>
+
+        <div class="process-flow">
+          <div class="flow-step">
+            <div class="step-icon">AI</div>
+            <div class="step-text">Understand thread</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">AI</div>
+            <div class="step-text">Apply company context</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">AI</div>
+            <div class="step-text">Draft response</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">↺</div>
+            <div class="step-text">Human review if needed</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">✓</div>
+            <div class="step-text">Send faster</div>
+          </div>
+        </div>
+
+        <div class="process-meta">
+          <div class="meta-box">
+            <span class="meta-title">What changes</span>
+            <span class="meta-text">Faster first responses with more consistency.</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-title">What it enables</span>
+            <span class="meta-text">One person supervises far more output.</span>
+          </div>
+        </div>
+
+        <div class="impact-line">
+          <strong>Result:</strong> more throughput, less manual load, better response quality at scale.
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,2094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agentic Email Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f5f6;
+      --bg-soft: #efeff1;
+      --card: #ffffff;
+      --text: #151515;
+      --muted: #727272;
+      --line: #e3e3e6;
+      --dark: #0a0a0b;
+      --dark-2: #171718;
+      --accent: #ff6d35;
+      --accent-2: #ff7b44;
+      --accent-soft: rgba(255,109,53,0.14);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --container: 1140px;
+      --shadow-soft: 0 16px 44px rgba(0, 0, 0, 0.05);
+      --shadow-dark: 0 18px 54px rgba(0, 0, 0, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(var(--container), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10, 10, 11, 0.96);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.94rem;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 22px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-family: inherit;
+      font-size: 0.97rem;
+      font-weight: 600;
+      transition: 0.22s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(255, 109, 53, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: var(--accent-2);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,0.28);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-shell {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255, 109, 53, 0.14), transparent 32%),
+        radial-gradient(circle at 82% 72%, rgba(255, 109, 53, 0.12), transparent 28%),
+        linear-gradient(180deg, #111112 0%, #171719 100%);
+      color: #fff;
+      padding-bottom: 42px;
+    }
+
+    .hero {
+      min-height: calc(100vh - 82px);
+      display: grid;
+      align-items: start;
+      padding: 80px 0 54px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.03fr 0.97fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .eyebrow,
+    .section-kicker {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 0.84rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .eyebrow { margin-bottom: 20px; }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.08;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4.2vw, 3.8rem);
+      line-height: 1.1;
+      max-width: 680px;
+    }
+
+    .accent { color: var(--accent); }
+
+    .hero-sub {
+      margin: 12px 0 28px;
+      max-width: 700px;
+      color: rgba(255,255,255,0.74);
+      font-size: 1.02rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .hero-highlights-wide {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .hero-highlight-item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      background: #3d3d3f;
+      border: 1px solid rgba(255,109,53,0.5);
+    }
+
+    .hero-highlight-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,109,53,0.15);
+      border: 1px solid rgba(255,109,53,0.5);
+      color: #ff7b44;
+      font-weight:700;
+      font-size: 0.95rem;
+    }
+
+    .hero-highlight-text strong {
+      display:block;
+      font-size: 1rem;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    .hero-highlight-text span {
+      color:#d1d1d4;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .hero-anchor-wrap {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-anchor-pills-wide {
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .hero-anchor-pills-wide a {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 18px;
+      border-radius:999px;
+      background:#3d3d3f;
+      border:1px solid rgba(255,109,53,0.5);
+      color:#fff;
+      transition: all 0.22s ease;
+    }
+
+    .hero-anchor-pills-wide a:hover {
+      background:#ff6d35;
+      border-color:#ff6d35;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(255,109,53,0.22);
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 26px;
+      padding: 22px;
+      box-shadow: var(--shadow-dark);
+      backdrop-filter: blur(10px);
+      align-self: start;
+      transform: translateY(-20px);
+    }
+
+    .terminal-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .window-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+    }
+
+    .mini-label {
+      color: rgba(255,255,255,0.72);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .dashboard-pane, .signal-stack, .outcome-grid, .faq-grid, .cards-grid, .steps-grid, .pricing-grid, .contact-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .metric-box,
+    .signal-card,
+    .inbox-card,
+    .thread-card,
+    .reply-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+    }
+
+    .metric-box { padding: 16px; }
+
+    .metric-kpi {
+      display: block;
+      color: #fff;
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 4px;
+    }
+
+    .metric-label {
+      display: block;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.82rem;
+    }
+
+    .signal-stack { gap: 12px; }
+
+    .signal-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px;
+      padding: 16px;
+      align-items: center;
+    }
+
+    .signal-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .signal-icon.red { background: rgba(255, 109, 53, 0.95); }
+    .signal-icon.green { background: #1ca86f; }
+    .signal-icon.soft { background: rgba(255,255,255,0.12); }
+
+    .signal-card strong {
+      display: block;
+      color: #fff;
+      font-size: 0.95rem;
+      margin-bottom: 3px;
+      line-height: 1.35;
+    }
+
+    .signal-card small {
+      color: rgba(255,255,255,0.68);
+      font-size: 0.8rem;
+    }
+
+    .signal-tag {
+      padding: 8px 10px;
+      border-radius: 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+
+    .signal-tag.block { background: rgba(255,109,53,0.16); color: #ff9a74; }
+    .signal-tag.allow { background: rgba(28,168,111,0.16); color: #8fe3b8; }
+    .signal-tag.live { background: rgba(98,114,255,0.16); color: #c6ceff; }
+
+    .console-layout {
+      display: grid;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .inbox-card,
+    .thread-card,
+    .reply-card {
+      padding: 16px;
+    }
+
+    .inbox-head,
+    .reply-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.78);
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .thread-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .thread-bubble {
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .thread-bubble.user {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .thread-bubble.ai {
+      background: rgba(255,109,53,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,109,53,0.22);
+    }
+
+    .reply-box {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px dashed rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+
+    section { padding: 96px 0; }
+    .section-light { background: var(--bg); }
+    .section-soft { background: var(--bg-soft); }
+    .section-dark { background: #111112; color: #fff; }
+
+    .section-head {
+      text-align: center;
+      max-width: 820px;
+      margin: 0 auto 44px;
+    }
+
+    .section-title { font-size: clamp(1.6rem, 4vw, 3.6rem); }
+
+    .section-copy {
+      margin: 16px auto 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .section-dark .section-copy,
+    .section-dark .muted { color: rgba(255,255,255,0.72); }
+
+    .cards-grid.three { grid-template-columns: repeat(3, 1fr); }
+    .cards-grid.two { grid-template-columns: repeat(2, 1fr); }
+    .outcome-grid { grid-template-columns: repeat(4, 1fr); }
+    .steps-grid { grid-template-columns: repeat(4, 1fr); }
+    .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+    .faq-grid { grid-template-columns: repeat(2, 1fr); }
+    .contact-grid { grid-template-columns: 1.05fr 0.95fr; align-items: start; }
+
+    .card,
+    .mini-panel,
+    .faq,
+    .pricing-card,
+    .contact-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-dark .card,
+    .section-dark .pricing-card,
+    .section-dark .contact-card {
+      background: rgba(255,255,255,0.03);
+      border-color: rgba(255,255,255,0.08);
+      box-shadow: none;
+    }
+
+    .stat-card .big {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 2.1rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .card h3,
+    .step h3,
+    .faq h3,
+    .pricing-card h3,
+    .contact-card h3,
+    .compare-box h4 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+    }
+
+    .card p,
+    .step p,
+    .faq p,
+    .pricing-card p,
+    .contact-card p,
+    .compare-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .section-dark .card p,
+    .section-dark .step p,
+    .section-dark .faq p,
+    .section-dark .pricing-card p,
+    .section-dark .contact-card p,
+    .section-dark .compare-box p,
+    .section-dark .compare-box li { color: rgba(255,255,255,0.72); }
+
+    .icon-badge {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      background: rgba(255,109,53,0.12);
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .comparison-wrap {
+      background: #111112;
+      color: #fff;
+      border-radius: 28px;
+      padding: 34px;
+    }
+
+    .comparison-row,
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .compare-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 1.1rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .compare-box ul,
+    .feature-list,
+    .outcome-list,
+    .contact-list {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .compare-box li,
+    .feature-list li,
+    .outcome-list li,
+    .contact-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.95rem;
+    }
+
+    .tick {
+      flex: 0 0 auto;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      background: rgba(255,109,53,0.16);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+
+    .tick.cross {
+      background: rgba(255, 80, 80, 0.15);
+      color: #FF0000;
+    }
+
+    .step {
+      background: #3d3d3f;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 22px;
+      padding: 26px 24px;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .step-number {
+      position: absolute;
+      top: -14px;
+      left: 22px;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 10px 18px rgba(255,109,53,0.2);
+    }
+
+    .mini-panel { padding: 24px; }
+
+    .dark-panel {
+      background: #151516;
+      color: #fff;
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: var(--shadow-dark);
+    }
+
+    .dark-panel p { color: rgba(255,255,255,0.74); }
+
+    .pricing-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(255,109,53,0.35);
+      box-shadow: 0 18px 54px rgba(255,109,53,0.08);
+    }
+
+    .pricing-tag {
+      display: inline-flex;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,109,53,0.12);
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .price-placeholder {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin: 8px 0 10px;
+    }
+
+    .contact-card.dark {
+      background: #151516;
+      color: #fff;
+      border-color: rgba(255,255,255,0.08);
+      box-shadow: var(--shadow-dark);
+    }
+
+    .contact-card.dark p,
+    .contact-card.dark li { color: rgba(255,255,255,0.74); }
+
+    .contact-cta-stack {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .contact-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(0,0,0,0.07);
+      background: rgba(255,255,255,0.72);
+    }
+
+    .contact-card.dark .contact-line {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(255,255,255,0.08);
+    }
+
+    .cta-block {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,109,53,0.14), transparent 24%),
+        radial-gradient(circle at 80% 80%, rgba(255,109,53,0.10), transparent 24%),
+        linear-gradient(180deg, #141415 0%, #19191b 100%);
+      color: #fff;
+      padding: 96px 0;
+    }
+
+    .cta-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-wrap .section-title {
+      color: #fff;
+      font-size: clamp(2rem, 4vw, 4rem);
+    }
+
+    .cta-wrap .section-copy {
+      color: rgba(255,255,255,0.76);
+      max-width: 700px;
+    }
+
+    .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+    }
+
+    .footer {
+      background: #0a0a0b;
+      color: rgba(255,255,255,0.72);
+      padding: 58px 0 28px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr;
+      gap: 26px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer h4 {
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      font-size: 0.94rem;
+    }
+
+    .footer-bottom {
+      padding-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      font-size: 0.9rem;
+    }
+
+    .mobile-sales-fab {
+      position: fixed;
+      right: 14px;
+      bottom: 18px;
+      z-index: 60;
+      display: none;
+      min-height: 52px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 16px 34px rgba(255,109,53,0.28);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    @media (max-width: 1120px) {
+      .hero-grid,
+      .metric-row,
+      .cards-grid.three,
+      .cards-grid.two,
+      .outcome-grid,
+      .steps-grid,
+      .pricing-grid,
+      .faq-grid,
+      .split,
+      .comparison-row,
+      .contact-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-highlights-wide { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hero { min-height: auto; padding: 34px 0 48px; }
+      section { padding: 74px 0; }
+      .footer-bottom { flex-direction: column; }
+    }
+
+    @media (max-width: 640px) {
+      .container { width: min(var(--container), calc(100% - 24px)); }
+      .hero-actions, .cta-actions { flex-direction: column; }
+      .btn { width: 100%; }
+      h1 { font-size: 2.35rem; }
+      .comparison-wrap, .dark-panel, .hero-card { padding: 24px; }
+      .signal-card { grid-template-columns: 1fr; }
+      .mobile-sales-fab { display: inline-flex; align-items: center; justify-content: center; }
+	  
+	  
+	  compare-highlight-line {
+  text-align: center;
+  margin-top: 48px;}
+	  
+	  
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-shell">
+    <header class="site-header">
+      <div class="container nav">
+        <a href="#top" class="brand">3rd I Visuals</a>
+        <nav class="nav-links">
+          <a href="#problem">Why it matters</a>
+          <a href="#solution">Solution</a>
+          <a href="#pricing">Plans</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a href="#contact" class="btn btn-primary">Book a Demo</a>
+      </div>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Agentic Email Response System</div>
+          <h1>Your inbox should not depend on who is free to reply. <span class="accent">Let AI respond with context, accuracy, and human-like timing.</span></h1>
+          <p class="hero-sub">
+            An agentic email layer that reads the thread, understands the context, and replies like a trained team member would — while your people stay in control, step in anytime, and handle more work in far less time.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Book a Demo</a>
+            <a href="#solution" class="btn btn-secondary">See How It Works</a>
+          </div>
+
+          <!-- <div class="hero-highlights-wide"> -->
+            <!-- <div class="hero-highlight-item"> -->
+              <!-- <div class="hero-highlight-icon">01</div> -->
+              <!-- <div class="hero-highlight-text"> -->
+                <!-- <strong>Reply faster across every time zone</strong> -->
+                <!-- <span>Stay responsive even outside normal team availability.</span> -->
+              <!-- </div> -->
+            <!-- </div> -->
+            <!-- <div class="hero-highlight-item"> -->
+              <!-- <div class="hero-highlight-icon">02</div> -->
+              <!-- <div class="hero-highlight-text"> -->
+                <!-- <strong>Handle more emails with the same team</strong> -->
+                <!-- <span>Shift from hours of drafting to minutes of oversight.</span> -->
+              <!-- </div> -->
+            <!-- </div> -->
+            <!-- <div class="hero-highlight-item"> -->
+              <!-- <div class="hero-highlight-icon">03</div> -->
+              <!-- <div class="hero-highlight-text"> -->
+                <!-- <strong>Train it on your actual business context</strong> -->
+                <!-- <span>Website, brochures, uploads, documents, and internal guidance.</span> -->
+              <!-- </div> -->
+            <!-- </div> -->
+          <!-- </div> -->
+
+          <div class="hero-anchor-wrap">
+            <div class="hero-anchor-pills-wide">
+              <a href="#problem">Why it matters</a>
+              <a href="#solution">Capabilities</a>
+              <a href="#pricing">Plans</a>
+              <a href="#contact">Contact Sales</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="terminal-top">
+            <div class="window-dots"><span></span><span></span><span></span></div>
+            <div class="mini-label">Reply Console</div>
+          </div>
+
+          <div class="dashboard-pane">
+            <!-- <div class="metric-row"> -->
+              <!-- <div class="metric-box"> -->
+                <!-- <span class="metric-kpi">24/7</span> -->
+                <!-- <span class="metric-label">Availability across geographies and working hours</span> -->
+              <!-- </div> -->
+              <!-- <div class="metric-box"> -->
+                <!-- <span class="metric-kpi">1 hr</span> -->
+                <!-- <span class="metric-label">Oversight instead of a full day of repetitive replies</span> -->
+              <!-- </div> -->
+              <!-- <div class="metric-box"> -->
+                <!-- <span class="metric-kpi">Live</span> -->
+                <!-- <span class="metric-label">Human-in-the-loop takeover whenever needed</span> -->
+              <!-- </div> -->
+            <!-- </div> -->
+
+            <div class="signal-stack">
+              <div class="signal-card">
+                <div class="signal-icon soft">✉</div>
+                <div>
+                  <strong>New sales enquiry received from a different time zone</strong>
+                  <small>Thread understood with previous context and product details</small>
+                </div>
+                <div class="signal-tag live">Queued</div>
+              </div>
+              <div class="signal-card">
+                <div class="signal-icon green">✓</div>
+                <div>
+                  <strong>Reply drafted in your brand tone with the right business context</strong>
+                  <small>Website, brochures, FAQs, and company knowledge applied</small>
+                </div>
+                <div class="signal-tag allow">Ready</div>
+              </div>
+              <div class="signal-card">
+                <div class="signal-icon red">HU</div>
+                <div>
+                  <strong>Human-in-the-Loop enabled</strong>
+                  <small>A team member can step in, edit, continue, or take over anytime</small>
+                </div>
+                <div class="signal-tag block">Override</div>
+              </div>
+            </div>
+
+            <!-- <div class="console-layout"> -->
+              <!-- <div class="inbox-card"> -->
+                <!-- <div class="inbox-head"> -->
+                  <!-- <strong style="color:#fff; font-size:0.92rem;">Live Conversation Preview</strong> -->
+                  <!-- <span class="pill">Human-like delay active</span> -->
+                <!-- </div> -->
+                <!-- <div class="thread-grid"> -->
+                  <!-- <div class="thread-bubble user">Hi, we wanted to understand your pricing, implementation flow, and whether this can adapt to our support and sales inboxes separately.</div> -->
+                  <!-- <div class="thread-bubble ai">Absolutely. The system can be trained by function, department, and tone. Sales, support, and partnership inboxes can each follow different instructions, knowledge, and escalation rules.</div> -->
+                <!-- </div> -->
+              <!-- </div> -->
+              <!-- <div class="reply-card"> -->
+                <!-- <div class="reply-head"> -->
+                  <!-- <strong style="color:#fff; font-size:0.92rem;">Agent Output</strong> -->
+                  <!-- <span class="pill">Team can take over</span> -->
+                <!-- </div> -->
+                <!-- <div class="reply-box"> -->
+                  <!-- Suggested reply prepared from your company knowledge base, scheduled to send within a natural response window, with a human review / override path always available. -->
+                <!-- </div> -->
+              <!-- </div> -->
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+
+
+
+<style>
+  .email-problem-panel {
+    padding: 96px 0;
+    background:
+      radial-gradient(circle at 18% 14%, rgba(255, 109, 53, 0.08), transparent 28%),
+      radial-gradient(circle at 82% 84%, rgba(255, 109, 53, 0.06), transparent 24%),
+      #f3f3f4;
+  }
+
+  .email-problem-panel * {
+    box-sizing: border-box;
+  }
+
+  .email-problem-panel .problem-wrap {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .email-problem-panel .problem-head {
+    max-width: 900px;
+    margin: 0 auto 34px;
+    text-align: center;
+  }
+
+  .email-problem-panel .problem-kicker {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 109, 53, 0.10);
+    color: #ff6d35;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .email-problem-panel .problem-head h2 {
+    margin: 0;
+    color: #111214;
+    font-size: clamp(2.2rem, 5vw, 4.9rem);
+    line-height: 1.02;
+    letter-spacing: -0.055em;
+    font-weight: 800;
+  }
+
+  .email-problem-panel .problem-head h2 span {
+    color: #111214;
+  }
+
+  .email-problem-panel .problem-head p {
+    max-width: 780px;
+    margin: 18px auto 0;
+    color: #666a73;
+    font-size: 1.03rem;
+    line-height: 1.72;
+  }
+
+  .email-problem-panel .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 38px;
+  }
+
+  .email-problem-panel .problem-card {
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(17, 18, 20, 0.06);
+    border-radius: 26px;
+    padding: 22px 22px 20px;
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(8px);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .email-problem-panel .problem-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.08);
+  }
+
+  .email-problem-panel .problem-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 16px;
+    background: linear-gradient(180deg, #fff1ea 0%, #fde6db 100%);
+    color: #ff6d35;
+    font-size: 1.25rem;
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px rgba(255, 109, 53, 0.12);
+  }
+
+  .email-problem-panel .problem-card h3 {
+    margin: 0 0 8px;
+    color: #111214;
+    font-size: 1.08rem;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+
+  .email-problem-panel .problem-card p {
+    margin: 0;
+    color: #5f6470;
+    font-size: 0.96rem;
+    line-height: 1.55;
+    min-height: 48px;
+  }
+
+  .email-problem-panel .problem-chip {
+    display: inline-flex;
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    background: #f6f7f8;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+    color: #7a7f89;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .email-problem-panel .process-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .email-problem-panel .process-card {
+    border-radius: 28px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .email-problem-panel .process-card.old {
+    background: #ffffff;
+    border: 1px solid rgba(17, 18, 20, 0.07);
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.04);
+  }
+
+  .email-problem-panel .process-card.new {
+    background: linear-gradient(180deg, #1a1a1d 0%, #111214 100%);
+    color: #fff;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+  }
+
+  .email-problem-panel .process-card.new::after {
+    content: "";
+    position: absolute;
+    right: -50px;
+    bottom: -50px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(255,109,53,0.22) 0%, rgba(255,109,53,0) 70%);
+    pointer-events: none;
+  }
+
+  .email-problem-panel .process-label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .email-problem-panel .process-card.old .process-label {
+    background: #f4f4f5;
+    color: #6a6f78;
+  }
+
+  .email-problem-panel .process-card.new .process-label {
+    background: rgba(255, 109, 53, 0.14);
+    color: #ff8a5d;
+  }
+
+  .email-problem-panel .process-card h4 {
+    margin: 0 0 10px;
+    font-size: 1.35rem;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+  }
+
+  .email-problem-panel .process-card.old h4 {
+    color: #111214;
+  }
+
+  .email-problem-panel .process-card.new h4 {
+    color: #fff;
+  }
+
+  .email-problem-panel .process-sub {
+    margin: 0 0 18px;
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+
+  .email-problem-panel .process-card.old .process-sub {
+    color: #616773;
+  }
+
+  .email-problem-panel .process-card.new .process-sub {
+    color: rgba(255,255,255,0.76);
+  }
+
+  .email-problem-panel .process-flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .email-problem-panel .process-flow::-webkit-scrollbar {
+    display: none;
+  }
+
+  .email-problem-panel .flow-step {
+    flex: 0 0 auto;
+    min-width: 108px;
+    min-height: 92px;
+    border-radius: 22px;
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .email-problem-panel .process-card.old .flow-step {
+    background: #f6f7f8;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+  }
+
+  .email-problem-panel .process-card.new .flow-step {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .email-problem-panel .step-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .email-problem-panel .process-card.old .step-icon {
+    background: #ffffff;
+    color: #7a818d;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+  }
+
+  .email-problem-panel .process-card.new .step-icon {
+    background: rgba(255,109,53,0.14);
+    color: #ff8a5d;
+    border: 1px solid rgba(255,109,53,0.18);
+  }
+
+  .email-problem-panel .step-text {
+    font-size: 0.86rem;
+    line-height: 1.35;
+    font-weight: 700;
+  }
+
+  .email-problem-panel .process-card.old .step-text {
+    color: #2b2f37;
+  }
+
+  .email-problem-panel .process-card.new .step-text {
+    color: #fff;
+  }
+
+  .email-problem-panel .flow-arrow {
+    flex: 0 0 auto;
+    font-size: 1rem;
+    font-weight: 700;
+    opacity: 0.55;
+    transform: translateY(-2px);
+  }
+
+  .email-problem-panel .process-card.old .flow-arrow {
+    color: #8c919a;
+  }
+
+  .email-problem-panel .process-card.new .flow-arrow {
+    color: #ff8a5d;
+    opacity: 0.8;
+  }
+
+  .email-problem-panel .process-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+
+  .email-problem-panel .meta-box {
+    border-radius: 18px;
+    padding: 14px 14px 13px;
+  }
+
+  .email-problem-panel .process-card.old .meta-box {
+    background: #f8f8f9;
+    border: 1px solid rgba(17, 18, 20, 0.06);
+  }
+
+  .email-problem-panel .process-card.new .meta-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .email-problem-panel .meta-title {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .email-problem-panel .process-card.old .meta-title {
+    color: #8a8f98;
+  }
+
+  .email-problem-panel .process-card.new .meta-title {
+    color: #ff9a74;
+  }
+
+  .email-problem-panel .meta-text {
+    font-size: 0.92rem;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+
+  .email-problem-panel .process-card.old .meta-text {
+    color: #2f3440;
+  }
+
+  .email-problem-panel .process-card.new .meta-text {
+    color: #fff;
+  }
+
+  .email-problem-panel .impact-line {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(17,18,20,0.08);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    font-weight: 600;
+  }
+
+  .email-problem-panel .process-card.new .impact-line {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.82);
+  }
+
+  .email-problem-panel .process-card.old .impact-line {
+    color: #646a75;
+  }
+
+  .email-problem-panel .impact-line strong {
+    color: #111214;
+  }
+
+  .email-problem-panel .process-card.new .impact-line strong {
+    color: #fff;
+  }
+
+  @media (max-width: 1080px) {
+    .email-problem-panel .problem-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .email-problem-panel .process-compare {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .email-problem-panel {
+      padding: 72px 0;
+    }
+
+    .email-problem-panel .problem-wrap {
+      width: min(1180px, calc(100% - 24px));
+    }
+
+    .email-problem-panel .problem-head {
+      margin-bottom: 28px;
+    }
+
+    .email-problem-panel .problem-head h2 {
+      font-size: 2.45rem;
+    }
+
+    .email-problem-panel .problem-head p {
+      font-size: 0.96rem;
+      line-height: 1.68;
+    }
+
+    .email-problem-panel .problem-grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .email-problem-panel .problem-card,
+    .email-problem-panel .process-card {
+      border-radius: 22px;
+    }
+
+    .email-problem-panel .process-card {
+      padding: 22px;
+    }
+
+    .email-problem-panel .flow-step {
+      min-width: 96px;
+      min-height: 88px;
+      border-radius: 18px;
+    }
+
+    .email-problem-panel .process-meta {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+
+
+
+
+<section class="email-problem-panel" id="why-it-matters">
+  <div class="problem-wrap">
+    <div class="problem-head">
+      <div class="problem-kicker">Why it matters</div>
+      <h2 class="section-title">Slow, inconsistent email handling quietly drains productivity.</h2>
+      <p>
+        When every reply depends on human availability, memory, and drafting effort,
+        response speed and quality become difficult to scale.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+      <article class="problem-card">
+        <div class="problem-icon">⏱</div>
+        <h3>Delays</h3>
+        <p>Replies wait on people.</p>
+        <div class="problem-chip">Busy · Off-shift · Time zone</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">≋</div>
+        <h3>Inconsistency</h3>
+        <p>Tone and quality vary by person.</p>
+        <div class="problem-chip">Different styles · Different answers</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">⌘</div>
+        <h3>Context Loss</h3>
+        <p>Thread history gets missed.</p>
+        <div class="problem-chip">Attachments · Prior decisions · Nuance</div>
+      </article>
+
+      <article class="problem-card">
+        <div class="problem-icon">↗</div>
+        <h3>Scaling Cost</h3>
+        <p>More volume means more overhead.</p>
+        <div class="problem-chip">Hiring · Training · Supervision</div>
+      </article>
+    </div>
+
+    <div class="process-compare">
+      <article class="process-card old">
+        <div class="process-label">Traditional workflow</div>
+        <h4>Human-only inbox handling</h4>
+        <p class="process-sub">
+          Every message goes through the same repeated manual chain.
+        </p>
+
+        <div class="process-flow">
+          <div class="flow-step">
+            <div class="step-icon">01</div>
+            <div class="step-text">Read email</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">02</div>
+            <div class="step-text">Recall context</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">03</div>
+            <div class="step-text">Search facts</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">04</div>
+            <div class="step-text">Draft reply</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">05</div>
+            <div class="step-text">Recheck tone</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">06</div>
+            <div class="step-text">Send</div>
+          </div>
+        </div>
+
+        <div class="process-meta">
+          <div class="meta-box">
+            <span class="meta-title">What happens</span>
+            <span class="meta-text">More rework, more waiting, more variation.</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-title">What it needs</span>
+            <span class="meta-text">More people as volume increases.</span>
+          </div>
+        </div>
+
+        <div class="impact-line">
+          <strong>Result:</strong> slower response cycles and inconsistent output quality.
+        </div>
+      </article>
+
+      <article class="process-card new">
+        <div class="process-label">Better model</div>
+        <h4>AI-assisted email handling</h4>
+        <p class="process-sub">
+          The system does the heavy lifting first. Humans supervise only where needed.
+        </p>
+
+        <div class="process-flow">
+          <div class="flow-step">
+            <div class="step-icon">AI</div>
+            <div class="step-text">Understand thread</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">AI</div>
+            <div class="step-text">Apply company context</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">AI</div>
+            <div class="step-text">Draft response</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">↺</div>
+            <div class="step-text">Human review if needed</div>
+          </div>
+          <div class="flow-arrow">→</div>
+
+          <div class="flow-step">
+            <div class="step-icon">✓</div>
+            <div class="step-text">Send faster</div>
+          </div>
+        </div>
+
+        <div class="process-meta">
+          <div class="meta-box">
+            <span class="meta-title">What changes</span>
+            <span class="meta-text">Faster first responses with more consistency.</span>
+          </div>
+          <div class="meta-box">
+            <span class="meta-title">What it enables</span>
+            <span class="meta-text">One person supervises far more output.</span>
+          </div>
+        </div>
+
+        <div class="impact-line">
+          <strong>Result:</strong> more throughput, less manual load, better response quality at scale.
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <section class="section-light" id="problem"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="section-head"> -->
+        <!-- <div class="section-kicker">Why this matters</div> -->
+        <!-- <h2 class="section-title">Slow, inconsistent email handling quietly drains productivity and revenue.</h2> -->
+        <!-- <p class="section-copy"> -->
+          <!-- Emails are still one of the most important business channels — for sales, support, partnerships, and operations. But when every reply depends on human availability, context recall, and drafting effort, your response quality and speed become hard to scale. -->
+        <!-- </p> -->
+      <!-- </div> -->
+
+      <!-- <div class="outcome-grid"> -->
+        <!-- <article class="card stat-card"> -->
+          <!-- <span class="big">Delays</span> -->
+          <!-- <p>Replies get pushed back when teams are busy, travelling, off-shift, or juggling multiple inboxes.</p> -->
+        <!-- </article> -->
+        <!-- <article class="card stat-card"> -->
+          <!-- <span class="big">Inconsistency</span> -->
+          <!-- <p>Different people reply differently, creating variation in tone, accuracy, and follow-up quality.</p> -->
+        <!-- </article> -->
+        <!-- <article class="card stat-card"> -->
+          <!-- <span class="big">Context Loss</span> -->
+          <!-- <p>Long threads, attachments, and prior decisions are easy to miss when response work is repetitive and manual.</p> -->
+        <!-- </article> -->
+        <!-- <article class="card stat-card"> -->
+          <!-- <span class="big">Scaling Cost</span> -->
+          <!-- <p>Higher volume usually means more hiring, more supervision, and more training overhead.</p> -->
+        <!-- </article> -->
+      <!-- </div> -->
+
+      <!-- <div class="split" style="margin-top:24px;"> -->
+        <!-- <div class="card"> -->
+          <!-- <div class="icon-badge">⏱</div> -->
+          <!-- <h3>What the current model gets wrong</h3> -->
+          <!-- <p>Human reply handling is valuable, but too much of it is spent on repetitive drafting, searching for facts, checking tone, and rethinking answers that should already be system-ready.</p> -->
+        <!-- </div> -->
+        <!-- <div class="card"> -->
+          <!-- <div class="icon-badge">↗</div> -->
+          <!-- <h3>The real opportunity</h3> -->
+          <!-- <p>This is not about removing people. It is about letting one trained person supervise the output that would normally consume an entire team’s daily response hours.</p> -->
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </section> -->
+
+  <!-- <section class="section-dark"> -->
+    <!-- <div class="container"> -->
+      <!-- <div class="section-head"> -->
+        <!-- <div class="section-kicker">The shift</div> -->
+        <!-- <h2 class="section-title">Keep the human judgement. Remove the repetitive email burden.</h2> -->
+      <!-- </div> -->
+
+      <!-- <div class="comparison-row"> -->
+        <!-- <div class="compare-box"> -->
+          <!-- <div class="label">Traditional workflow</div> -->
+          <!-- <h4>Every email needs manual attention</h4> -->
+          <!-- <ul> -->
+            <!-- <li><span class="tick cross">✗</span>Drafting consumes large parts of the workday.</li> -->
+            <!-- <li><span class="tick cross">✗</span>Reply quality depends on who handles the thread.</li> -->
+            <!-- <li><span class="tick cross">✗</span>Coverage drops outside working hours and across time zones.</li> -->
+          <!-- </ul> -->
+        <!-- </div> -->
+        <!-- <div class="compare-box"> -->
+          <!-- <div class="label">Agentic workflow</div> -->
+          <!-- <h4>AI handles the response layer, humans stay in control</h4> -->
+          <!-- <ul> -->
+            <!-- <li><span class="tick">✓</span>Context-aware replies can be generated instantly.</li> -->
+            <!-- <li><span class="tick">✓</span>Knowledge, tone, and operating rules stay consistent.</li> -->
+            <!-- <li><span class="tick">✓</span>Humans can review, step in, edit, or take over anytime.</li> -->
+          <!-- </ul> -->
+        <!-- </div> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  <!-- </section> -->
+
+  <section class="section-light" id="solution">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">What we offer</div>
+        <h2 class="section-title">A trained email agent that behaves like a reliable team member.</h2>
+        <p class="section-copy">It reads, understands, drafts, schedules, and responds using your company context — not just generic templates.</p>
+      </div>
+
+      <div class="cards-grid three">
+        <article class="card">
+          <div class="icon-badge">🧠</div>
+          <h3>Understands the thread</h3>
+          <p>Reads conversation history, interprets the actual ask, and responds with context instead of just reacting to the last line.</p>
+        </article>
+        <article class="card">
+          <div class="icon-badge">🏢</div>
+          <h3>Trained on your business</h3>
+          <p>Website content, uploaded files, brochures, FAQs, product details, and internal guidance can shape how it responds.</p>
+        </article>
+        <article class="card">
+          <div class="icon-badge">⏳</div>
+          <h3>Human-like timing</h3>
+          <p>Replies can go instantly or follow a natural delay pattern so communication still feels realistic and professional.</p>
+        </article>
+        <article class="card">
+          <div class="icon-badge">🌍</div>
+          <h3>Works beyond office hours</h3>
+          <p>Stay responsive for global clients, prospects, and partners without forcing your team into around-the-clock reply work.</p>
+        </article>
+        <article class="card">
+          <div class="icon-badge">🔄</div>
+          <h3>Easy to update</h3>
+          <p>New documents, revised policies, updated brochures, and changing business rules can keep the agent current over time.</p>
+        </article>
+        <article class="card">
+          <div class="icon-badge">👤</div>
+          <h3>Human-in-the-Loop</h3>
+          <p>AI can start the thread, but a person can jump in anytime to review, revise, continue, or fully take over the conversation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">How it works</div>
+        <h2 class="section-title">A simple operating layer between your inbox and your team.</h2>
+        <p class="section-copy">Designed to increase output, improve consistency, and keep escalation paths clear.</p>
+      </div>
+
+      <div class="steps-grid">
+        <article class="step">
+          <div class="step-number">01</div>
+          <h3>Email arrives</h3>
+          <p>The system detects the thread, the intent, and the type of conversation that needs to be handled.</p>
+        </article>
+        <article class="step">
+          <div class="step-number">02</div>
+          <h3>Context is applied</h3>
+          <p>Knowledge from your company sources is pulled in so the draft is accurate, relevant, and on-brand.</p>
+        </article>
+        <article class="step">
+          <div class="step-number">03</div>
+          <h3>Reply is generated</h3>
+          <p>The response can be sent instantly, delayed naturally, or held for human review depending on your workflow rules.</p>
+        </article>
+        <article class="step">
+          <div class="step-number">04</div>
+          <h3>Human can step in</h3>
+          <p>Your team can supervise, edit, continue, or take over any live thread from the same interface whenever needed.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-soft">
+    <div class="container split">
+      <div>
+        <div class="section-kicker">Why teams like this model</div>
+        <h2 class="section-title" style="font-size: clamp(2rem, 4vw, 3.25rem);">Higher productivity without giving up control.</h2>
+        <p class="section-copy" style="text-align:left; max-width:none; margin-left:0;">The biggest benefit is not “automation” by itself. It is output multiplication. The same team can stay more responsive, handle more conversations, and maintain better consistency without adding reply fatigue.</p>
+
+        <div class="cards-grid two" style="margin-top:28px;">
+          <div class="mini-panel">
+            <h3>Operational gains</h3>
+            <ul class="feature-list">
+              <li><span class="tick">✓</span><span>Less time spent drafting repeatable replies.</span></li>
+              <li><span class="tick">✓</span><span>Better consistency across multiple inboxes and team members.</span></li>
+              <li><span class="tick">✓</span><span>Faster initial response across business functions.</span></li>
+            </ul>
+          </div>
+          <div class="mini-panel">
+            <h3>Business gains</h3>
+            <ul class="feature-list">
+              <li><span class="tick">✓</span><span>Quicker response can improve lead handling and customer confidence.</span></li>
+              <li><span class="tick">✓</span><span>Coverage beyond office hours supports global business.</span></li>
+              <li><span class="tick">✓</span><span>Training and refinement make the system smarter over time.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-panel">
+        <h3 style="margin-bottom:14px;">Typical use cases</h3>
+        <ul class="outcome-list">
+          <li><span class="tick">✓</span><span>Sales enquiries and lead qualification</span></li>
+          <li><span class="tick">✓</span><span>Support replies and issue triage</span></li>
+          <li><span class="tick">✓</span><span>Partnership, vendor, and business coordination emails</span></li>
+          <li><span class="tick">✓</span><span>Founder or executive inbox assistance</span></li>
+          <li><span class="tick">✓</span><span>Multi-time-zone customer communication</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  
+  
+  
+  <section class="section-dark">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">What makes it different</div>
+      <h2 class="section-title">
+        Beyond auto-replies. Beyond bots.<br>
+        <span class="accent">Agentic AI understands context.</span>
+      </h2>
+      <p class="section-copy">
+        Traditional automation sends responses. Agentic AI understands the conversation,
+        applies business context, and responds the way your team would.
+      </p>
+    </div>
+
+    <div class="comparison-row">
+
+      <div class="compare-box">
+        <div class="label">Auto-Replies / Bots</div>
+        <h4>Rule-based automation</h4>
+        <ul>
+          <li><span class="tick cross">✗</span>Trigger-based responses</li>
+          <li><span class="tick cross">✗</span>Template or keyword dependent</li>
+          <li><span class="tick cross">✗</span>Limited thread understanding</li>
+          <li><span class="tick cross">✗</span>Generic or robotic tone</li>
+          <li><span class="tick cross">✗</span>Struggles with nuanced emails</li>
+          <li><span class="tick cross">✗</span>Needs manual intervention often</li>
+        </ul>
+        <div class="compare-footer">Best for: simple repetitive replies</div>
+      </div>
+
+      <div class="compare-box highlight">
+        <div class="label">Agentic Email AI</div>
+        <h4>Context-aware communication</h4>
+        <ul>
+          <li><span class="tick">✓</span>Understands full email threads</li>
+          <li><span class="tick">✓</span>Responds based on intent & context</li>
+          <li><span class="tick">✓</span>Trained on company knowledge</li>
+          <li><span class="tick">✓</span>Maintains brand tone consistency</li>
+          <li><span class="tick">✓</span>Handles nuanced conversations</li>
+          <li><span class="tick">✓</span>Allows human takeover anytime</li>
+        </ul>
+        <div class="compare-footer">Best for: scalable business communication</div>
+      </div>
+
+    </div>
+
+    <div class="compare-highlight-line">
+      <h3>
+        Bots follow rules. <span class="accent">Agentic AI understands context.</span>
+      </h3>
+    </div>
+
+  </div>
+</section>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <section class="section-light" id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">Plans</div>
+        <h2 class="section-title">Structured like SaaS. Scoped like a real business system.</h2>
+        <p class="section-copy">Pricing is customised based on inbox volume, workflow complexity, training depth, and review / takeover requirements.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="pricing-card">
+          <div class="pricing-tag">Starter</div>
+          <h3>Single function deployment</h3>
+          <div class="price-placeholder">Custom</div>
+          <p>Ideal for one focused inbox such as enquiries, support, or partnerships with a defined workflow.</p>
+          <ul class="feature-list">
+            <li><span class="tick">✓</span><span>One inbox or use case</span></li>
+            <li><span class="tick">✓</span><span>Knowledge-based training</span></li>
+            <li><span class="tick">✓</span><span>Demo + implementation guidance</span></li>
+          </ul>
+          <div class="contact-cta-stack"><a href="#contact" class="btn btn-primary">Book a Demo</a></div>
+        </article>
+
+        <article class="pricing-card featured">
+          <div class="pricing-tag">Growth</div>
+          <h3>Multi-workflow deployment</h3>
+          <div class="price-placeholder">Custom</div>
+          <p>Built for businesses that want department-specific behaviour, escalation rules, and broader email coverage.</p>
+          <ul class="feature-list">
+            <li><span class="tick">✓</span><span>Multiple inboxes or scenarios</span></li>
+            <li><span class="tick">✓</span><span>Human-in-the-Loop workflows</span></li>
+            <li><span class="tick">✓</span><span>Refinement and training expansion</span></li>
+          </ul>
+          <div class="contact-cta-stack"><a href="#contact" class="btn btn-primary">Talk to Sales</a></div>
+        </article>
+
+        <article class="pricing-card">
+          <div class="pricing-tag">Enterprise</div>
+          <h3>Custom operating layer</h3>
+          <div class="price-placeholder">Custom</div>
+          <p>For larger teams needing control layers, deeper knowledge integration, scheduling logic, and advanced workflow design.</p>
+          <ul class="feature-list">
+            <li><span class="tick">✓</span><span>Advanced routing and business rules</span></li>
+            <li><span class="tick">✓</span><span>Training from multiple sources</span></li>
+            <li><span class="tick">✓</span><span>Custom rollout planning</span></li>
+          </ul>
+          <div class="contact-cta-stack"><a href="#contact" class="btn btn-primary">Contact Sales</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-block">
+    <div class="container cta-wrap">
+      <div class="section-kicker">Book a demo</div>
+      <h2 class="section-title">Your team should spend time deciding — not retyping what the business already knows.</h2>
+      <p class="section-copy">See how agentic email handling can make your response system faster, smarter, and more scalable without removing the human layer.</p>
+      <div class="cta-actions">
+        <a href="#contact" class="btn btn-primary">Book a Demo</a>
+        <a href="#pricing" class="btn btn-secondary">Explore Plan Structure</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-light" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-kicker">FAQ</div>
+        <h2 class="section-title">Questions teams ask before rollout</h2>
+      </div>
+
+      <div class="faq-grid">
+        <article class="faq card">
+          <h3>Will this replace my team?</h3>
+          <p>No. The model is designed to improve team productivity, speed, and consistency. People stay in control and can take over whenever needed.</p>
+        </article>
+        <article class="faq card">
+          <h3>Can it really reply based on our company details?</h3>
+          <p>Yes. It can be trained from your website, uploaded material, brochures, FAQs, and other approved business information.</p>
+        </article>
+        <article class="faq card">
+          <h3>Can we control when it replies?</h3>
+          <p>Yes. You can define response timing, working-hour logic, delay behaviour, review needs, and escalation paths.</p>
+        </article>
+        <article class="faq card">
+          <h3>What if a person wants to take over the thread?</h3>
+          <p>That is built into the system. Human-in-the-Loop mode allows a person to edit, continue, or fully take over any conversation from the same workflow.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark" id="contact">
+    <div class="container contact-grid">
+      <div class="contact-card dark">
+        <div class="section-kicker">Contact sales</div>
+        <h2 class="section-title" style="color:#fff; margin-bottom:12px;">Let’s discuss your inbox workflow and rollout model.</h2>
+        <p>Share your use case, team setup, and what type of email handling you want to improve. We can help map the right deployment structure.</p>
+        <ul class="contact-list">
+          <li><span class="tick">✓</span><span>Sales, support, partnerships, or mixed workflows</span></li>
+          <li><span class="tick">✓</span><span>Single inbox or multi-inbox deployment planning</span></li>
+          <li><span class="tick">✓</span><span>Training source review and implementation discussion</span></li>
+        </ul>
+      </div>
+
+      <div class="contact-card">
+        <h3>Get in touch</h3>
+        <p>Use your preferred CTA here. This block is designed to be replaced with your actual contact form, scheduling embed, WhatsApp CTA, or sales details.</p>
+
+        <div class="contact-cta-stack">
+          <div class="contact-line">
+            <div>
+              <strong>Book a live demo</strong><br>
+              <span style="color:var(--muted); font-size:0.9rem;">Walk through the actual response flow</span>
+            </div>
+            <a href="#" class="btn btn-primary" style="min-height:46px;">Book a Demo</a>
+          </div>
+
+          <div class="contact-line">
+            <div>
+              <strong>Talk to sales</strong><br>
+              <span style="color:var(--muted); font-size:0.9rem;">Discuss pricing, scope, and rollout options</span>
+            </div>
+            <a href="#" class="btn btn-primary" style="min-height:46px;">Talk to Sales</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>3rd I Visuals</h4>
+          <p style="margin:0; max-width:320px;">Agentic email response system for businesses that want faster replies, stronger consistency, and better team productivity.</p>
+        </div>
+        <div>
+          <h4>Sections</h4>
+          <ul>
+            <li><a href="#problem">Why it matters</a></li>
+            <li><a href="#solution">Solution</a></li>
+            <li><a href="#pricing">Plans</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Use Cases</h4>
+          <ul>
+            <li>Sales enquiries</li>
+            <li>Support workflows</li>
+            <li>Global inbox coverage</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Action</h4>
+          <ul>
+            <li><a href="#contact">Contact Sales</a></li>
+            <li><a href="#faq">FAQs</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 3rd I Visuals. All rights reserved.</div>
+        <div>Agentic Email Response System</div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#contact" class="mobile-sales-fab">Contact Sales</a>
+</body>
+</html>

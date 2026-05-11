@@ -1,0 +1,481 @@
+<style>
+  .email-flow-webpanel {
+    --bg: #f5f5f6;
+    --card: rgba(255,255,255,0.92);
+    --text: #101114;
+    --muted: #6a7080;
+    --line: #e6e7eb;
+    --accent: #ff6d35;
+    --pink: #ff5fb2;
+    --blue: #4c8dff;
+    --orange: #f7a13b;
+    --green: #38c95a;
+    --violet: #8f63f6;
+    --purple: #9d5cff;
+    --radius-xl: 30px;
+    --radius-lg: 24px;
+    --radius-md: 18px;
+    --shadow: 0 16px 44px rgba(0,0,0,0.05);
+    background:
+      radial-gradient(circle at 18% 20%, rgba(255,95,178,0.08), transparent 18%),
+      radial-gradient(circle at 82% 24%, rgba(76,141,255,0.07), transparent 18%),
+      radial-gradient(circle at 50% 88%, rgba(143,99,246,0.08), transparent 18%),
+      #f5f5f6;
+    padding: 96px 0;
+    overflow: hidden;
+  }
+
+  .email-flow-webpanel * {
+    box-sizing: border-box;
+  }
+
+  .email-flow-webpanel .wrap {
+    width: min(1320px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .email-flow-webpanel .head {
+    max-width: 900px;
+    margin: 0 auto 44px;
+    text-align: center;
+  }
+
+  .email-flow-webpanel .kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: rgba(255,109,53,0.12);
+    color: var(--accent);
+    font-family: Poppins, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .email-flow-webpanel .head h2 {
+    margin: 0;
+    color: var(--text);
+    font-family: Poppins, sans-serif;
+    font-size: clamp(2rem, 4.6vw, 4.6rem);
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    font-weight: 800;
+  }
+
+  .email-flow-webpanel .head p {
+    margin: 18px auto 0;
+    max-width: 840px;
+    color: var(--muted);
+    font-family: Poppins, sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .email-flow-webpanel .flow-track {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 26px;
+    align-items: stretch;
+    position: relative;
+  }
+
+  .email-flow-webpanel .step {
+    position: relative;
+    background: var(--card);
+    border: 1px solid rgba(16,17,20,0.07);
+    border-radius: 28px;
+    padding: 28px 24px 24px;
+    box-shadow: var(--shadow);
+    min-height: 390px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .email-flow-webpanel .step::after {
+    content: "";
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    bottom: 0;
+    height: 6px;
+    border-radius: 999px;
+    opacity: 0.95;
+  }
+
+  .email-flow-webpanel .step.pink::after { background: var(--pink); }
+  .email-flow-webpanel .step.blue::after { background: var(--blue); }
+  .email-flow-webpanel .step.orange::after { background: var(--orange); }
+  .email-flow-webpanel .step.green::after { background: var(--green); }
+  .email-flow-webpanel .step.violet::after { background: var(--violet); }
+  .email-flow-webpanel .step.purple::after { background: var(--purple); }
+
+  .email-flow-webpanel .step-num {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 54px;
+    height: 54px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-family: Poppins, sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+    box-shadow: 0 16px 30px rgba(0,0,0,0.12);
+  }
+
+  .email-flow-webpanel .step.pink .step-num { background: var(--pink); }
+  .email-flow-webpanel .step.blue .step-num { background: var(--blue); }
+  .email-flow-webpanel .step.orange .step-num { background: var(--orange); }
+  .email-flow-webpanel .step.green .step-num { background: var(--green); }
+  .email-flow-webpanel .step.violet .step-num { background: var(--violet); }
+  .email-flow-webpanel .step.purple .step-num { background: var(--purple); }
+
+  .email-flow-webpanel .icon-shell {
+    width: 116px;
+    height: 116px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    margin: 24px 0 18px;
+    font-size: 3rem;
+    position: relative;
+  }
+
+  .email-flow-webpanel .icon-shell::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.55);
+  }
+
+  .email-flow-webpanel .icon-shell span {
+    position: relative;
+    z-index: 1;
+    line-height: 1;
+  }
+
+  .email-flow-webpanel .step.pink .icon-shell {
+    background: radial-gradient(circle, rgba(255,95,178,0.18), rgba(255,95,178,0.09));
+    box-shadow: 0 0 0 8px rgba(255,95,178,0.08);
+  }
+
+  .email-flow-webpanel .step.blue .icon-shell {
+    background: radial-gradient(circle, rgba(76,141,255,0.18), rgba(76,141,255,0.09));
+    box-shadow: 0 0 0 8px rgba(76,141,255,0.08);
+  }
+
+  .email-flow-webpanel .step.orange .icon-shell {
+    background: radial-gradient(circle, rgba(247,161,59,0.18), rgba(247,161,59,0.09));
+    box-shadow: 0 0 0 8px rgba(247,161,59,0.08);
+  }
+
+  .email-flow-webpanel .step.green .icon-shell {
+    background: radial-gradient(circle, rgba(56,201,90,0.18), rgba(56,201,90,0.09));
+    box-shadow: 0 0 0 8px rgba(56,201,90,0.08);
+  }
+
+  .email-flow-webpanel .step.violet .icon-shell {
+    background: radial-gradient(circle, rgba(143,99,246,0.18), rgba(143,99,246,0.09));
+    box-shadow: 0 0 0 8px rgba(143,99,246,0.08);
+  }
+
+  .email-flow-webpanel .step.purple .icon-shell {
+    background: radial-gradient(circle, rgba(157,92,255,0.18), rgba(157,92,255,0.09));
+    box-shadow: 0 0 0 8px rgba(157,92,255,0.08);
+  }
+
+  .email-flow-webpanel .step h3 {
+    margin: 0 0 14px;
+    color: var(--text);
+    font-family: Poppins, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.22;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .email-flow-webpanel .step p {
+    margin: 0;
+    color: var(--muted);
+    font-family: Poppins, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .email-flow-webpanel .flow-arrow {
+    position: absolute;
+    top: 178px;
+    right: -19px;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    border: 1px solid rgba(16,17,20,0.08);
+    color: #6f7482;
+    font-size: 1.2rem;
+    font-weight: 700;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    z-index: 3;
+  }
+
+  .email-flow-webpanel .step:last-child .flow-arrow {
+    display: none;
+  }
+
+  .email-flow-webpanel .step.pink .flow-arrow { color: var(--pink); }
+  .email-flow-webpanel .step.blue .flow-arrow { color: var(--blue); }
+  .email-flow-webpanel .step.orange .flow-arrow { color: var(--orange); }
+  .email-flow-webpanel .step.green .flow-arrow { color: var(--green); }
+  .email-flow-webpanel .step.violet .flow-arrow { color: var(--violet); }
+
+  .email-flow-webpanel .result-band {
+    position: relative;
+    margin: 44px auto 0;
+    max-width: 1120px;
+  }
+
+  .email-flow-webpanel .result-line {
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #f7a13b 0%, #8f63f6 50%, #4c8dff 100%);
+    opacity: 0.75;
+  }
+
+  .email-flow-webpanel .result-tag {
+    position: relative;
+    display: table;
+    margin: -21px auto 0;
+    padding: 10px 24px;
+    border-radius: 999px;
+    background: #1f2f67;
+    color: #fff;
+    font-family: Poppins, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    box-shadow: 0 14px 28px rgba(31,47,103,0.16);
+  }
+
+  .email-flow-webpanel .result-card {
+    margin: 18px auto 0;
+    background: rgba(255,255,255,0.88);
+    border: 2px solid transparent;
+    background-image:
+      linear-gradient(#fff,#fff),
+      linear-gradient(90deg, #f7a13b 0%, #8f63f6 50%, #4c8dff 100%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    border-radius: 30px;
+    box-shadow: 0 18px 48px rgba(0,0,0,0.05);
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    align-items: center;
+  }
+
+  .email-flow-webpanel .result-item {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .email-flow-webpanel .result-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-size: 1.7rem;
+    background: rgba(255,109,53,0.10);
+  }
+
+  .email-flow-webpanel .result-item:nth-child(2) .result-icon {
+    background: rgba(143,99,246,0.10);
+  }
+
+  .email-flow-webpanel .result-item:nth-child(3) .result-icon {
+    background: rgba(76,141,255,0.10);
+  }
+
+  .email-flow-webpanel .result-copy strong {
+    display: block;
+    color: var(--text);
+    font-family: Poppins, sans-serif;
+    font-size: 1.02rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .email-flow-webpanel .result-copy span {
+    display: block;
+    color: var(--muted);
+    font-family: Poppins, sans-serif;
+    font-size: 0.94rem;
+    line-height: 1.45;
+  }
+
+  .email-flow-webpanel .result-item + .result-item {
+    border-left: 1px solid var(--line);
+    padding-left: 18px;
+  }
+
+  @media (max-width: 1240px) {
+    .email-flow-webpanel .flow-track {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 34px;
+    }
+
+    .email-flow-webpanel .flow-arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .email-flow-webpanel {
+      padding: 78px 0;
+    }
+
+    .email-flow-webpanel .wrap {
+      width: min(1320px, calc(100% - 24px));
+    }
+
+    .email-flow-webpanel .flow-track {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .email-flow-webpanel .step {
+      min-height: auto;
+      padding: 26px 22px 22px;
+    }
+
+    .email-flow-webpanel .step h3 {
+      min-height: auto;
+    }
+
+    .email-flow-webpanel .result-card {
+      grid-template-columns: 1fr;
+      padding: 22px;
+    }
+
+    .email-flow-webpanel .result-item + .result-item {
+      border-left: 0;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 18px;
+    }
+  }
+</style>
+
+<section class="email-flow-webpanel">
+  <div class="wrap">
+    <div class="head">
+      <div class="kicker">How it works</div>
+      <h2>Built to handle email like a human, with AI speed and scale.</h2>
+      <p>
+        From understanding the conversation to sending the right response, this workflow shows how the system combines business context, timing control, scalability, and human oversight.
+      </p>
+    </div>
+
+    <div class="flow-track">
+      <article class="step pink">
+        <div class="step-num">1</div>
+        <div class="icon-shell"><span>🧠</span></div>
+        <h3>Understands the thread</h3>
+        <p>Reads conversation history, interprets the actual ask, and responds with context instead of just reacting to the last line.</p>
+        <div class="flow-arrow">→</div>
+      </article>
+
+      <article class="step blue">
+        <div class="step-num">2</div>
+        <div class="icon-shell"><span>🏢</span></div>
+        <h3>Trained on your business</h3>
+        <p>Website content, uploaded files, brochures, FAQs, product details, and internal guidance can shape how it responds.</p>
+        <div class="flow-arrow">→</div>
+      </article>
+
+      <article class="step orange">
+        <div class="step-num">3</div>
+        <div class="icon-shell"><span>⏳</span></div>
+        <h3>Human-like timing</h3>
+        <p>Replies can go instantly or follow a natural delay pattern so communication still feels realistic and professional.</p>
+        <div class="flow-arrow">→</div>
+      </article>
+
+      <article class="step green">
+        <div class="step-num">4</div>
+        <div class="icon-shell"><span>🌍</span></div>
+        <h3>Works beyond office hours</h3>
+        <p>Stay responsive for global clients, prospects, and partners without forcing your team into around-the-clock reply work.</p>
+        <div class="flow-arrow">→</div>
+      </article>
+
+      <article class="step violet">
+        <div class="step-num">5</div>
+        <div class="icon-shell"><span>🔄</span></div>
+        <h3>Easy to update</h3>
+        <p>New documents, revised policies, updated brochures, and changing business rules can keep the agent current over time.</p>
+        <div class="flow-arrow">→</div>
+      </article>
+
+      <article class="step purple">
+        <div class="step-num">6</div>
+        <div class="icon-shell"><span>👤</span></div>
+        <h3>Human-in-the-Loop</h3>
+        <p>AI can start the thread, but a person can jump in anytime to review, revise, continue, or fully take over the conversation.</p>
+      </article>
+    </div>
+
+    <div class="result-band">
+      <div class="result-line"></div>
+      <div class="result-tag">The result</div>
+
+      <div class="result-card">
+        <div class="result-item">
+          <div class="result-icon">✨</div>
+          <div class="result-copy">
+            <strong>Faster responses</strong>
+            <span>with more consistency.</span>
+          </div>
+        </div>
+
+        <div class="result-item">
+          <div class="result-icon">⚡</div>
+          <div class="result-copy">
+            <strong>Scales effortlessly</strong>
+            <span>without adding headcount.</span>
+          </div>
+        </div>
+
+        <div class="result-item">
+          <div class="result-icon">👤</div>
+          <div class="result-copy">
+            <strong>Always with human control</strong>
+            <span>when needed.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
