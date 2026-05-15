@@ -33,7 +33,7 @@ app.use(session({
   cookie: { maxAge: 24 * 60 * 60 * 1000 }
 }));
 
-// Static assets (served under BASE path, index:false so HTML goes through serveHtml)
+// Static assets — index:false so root index.html goes through serveHtml for BASE injection
 app.use(BASE || '/', express.static(path.join(__dirname, 'public'), { index: false }));
 
 // Routes
@@ -43,6 +43,9 @@ app.use(`${BASE}/admin`, adminRoutes);
 // Booking page (inject BASE)
 app.get(`${BASE}/`, serveHtml(path.join(__dirname, 'public', 'index.html')));
 app.get(`${BASE}`,  serveHtml(path.join(__dirname, 'public', 'index.html')));
+
+// Serve index.html for subfolders (e.g. /snap/landing/)
+app.use(BASE || '/', express.static(path.join(__dirname, 'public')));
 
 // Init DB and start
 db.init();

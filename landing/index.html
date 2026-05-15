@@ -240,7 +240,6 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       font-weight: 700;
-      padding-bottom: 25px;
     }
 
 
@@ -547,7 +546,7 @@
       line-height: 1.65;
     }
 
-    section { padding: 60px 0; }
+    section { padding: 40px 0; }
     .section-light { background: var(--bg); }
     .section-soft { background: var(--bg-soft); }
     .section-dark { background: #111112; color: #fff; }
@@ -555,10 +554,10 @@
     .section-head {
           display: flex;
     flex-direction: column;
-    gap: 26px;
+    align-items:center;
+    gap: 10px;
     }
 
-    .section-title { font-size: 25px }
 
     .section-copy {
       margin: 16px auto 0;
@@ -732,7 +731,7 @@
     .step-number {
       position: absolute;
       top: -30px;
-      left: 22px;
+      left: 42%;
       width: 40px;
       height: 40px;
       border-radius: 999px;
@@ -1033,6 +1032,11 @@
       font-weight: 800;
       margin-bottom: 18px;
     }
+    .problem-head{
+        display:flex;
+        flex-direction:column;
+        align-items:center
+    }
 
     h1 {
       margin: 0;
@@ -1316,8 +1320,8 @@
 
           
         </div>
-<img src="right-panel.png" style="width:100%; height:100%" class="checks"/>
-      <img src="11.png" style="width:100%; height:100%" class="checks-mob"/>
+<img src="right-panel2.png" style="width:100%; height:100%" class="checks"/>
+      <img src="right-panel2.png" style="width:100%; height:100%" class="checks-mob"/>
         <!--<div class="hero-card">-->
         <!--  <div class="terminal-top">-->
         <!--    <div class="window-dots"><span></span><span></span><span></span></div>-->
@@ -1418,7 +1422,7 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
 
 <style>
   .email-problem-panel {
-    padding: 96px 0 0;
+    padding: 48px 0 0;
     background:
       radial-gradient(circle at 18% 14%, rgba(255, 109, 53, 0.08), transparent 28%),
       radial-gradient(circle at 82% 84%, rgba(255, 109, 53, 0.06), transparent 24%),
@@ -1817,6 +1821,7 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
     .email-problem-panel {
       padding: 42px 0 0;
     }
+    
     .section-head {
         gap:5px
     }
@@ -1827,6 +1832,7 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
 .checks-mob{
     display:flex;
 }
+
 
     .email-problem-panel .problem-wrap {
       width: min(1180px, calc(100% - 24px));
@@ -1870,6 +1876,8 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
       grid-template-columns: 1fr;
     }
   }
+      .section-title { font-size: 40px }
+
 </style>
 
 
@@ -2143,7 +2151,7 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
     <div class="panel">
       <div class="section-head">
         <div class="kicker">AI email assistant capabilities</div>
-        <h1>An AI email assistant that understands the <span class="accent">thread, intent, and your business</span> before it replies.</h1>
+        <h1>An AI email assistant that <span class="accent"> understands the thread, intent,</span> and <span class="accent">your business</span> before it replies.</h1>
         <p class="subcopy">It reads, understands, drafts, schedules, and sends replies using your company context — not generic templates, keyword triggers, or one-line auto responses.</p>
       </div>
 
@@ -2283,7 +2291,7 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
 
     .ai-benefit-section {
       min-height: 100vh;
-      padding: 80px 0;
+      padding: 20px 0;
       background:
         radial-gradient(circle at 16% 12%, rgba(255,109,53,0.07), transparent 26%),
         radial-gradient(circle at 86% 72%, rgba(255,109,53,0.05), transparent 28%),
@@ -2295,9 +2303,6 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
       margin: 0 auto;
       padding: 54px 64px 34px;
       border-radius: 34px;
-      background: rgba(255,255,255,0.42);
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 24px 80px rgba(0,0,0,0.06);
     }
 
     .top-layout {
@@ -2310,13 +2315,14 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
     .section-kicker {
       display: flex;
       align-items: center;
+      justify-content:center;
       gap: 16px;
       color: var(--accent);
       font-size: 0.82rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       font-weight: 800;
-      margin-bottom: 20px;
+      padding-bottom:10px;
     }
 
     .section-kicker::before,
@@ -2331,7 +2337,6 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
 
     h2 {
       margin: 0;
-      max-width: 700px;
       font-size: clamp(2.1rem, 4.5vw, 4rem);
       line-height: 1.08;
       letter-spacing: 0.04em;
@@ -2582,12 +2587,11 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
     }
 
     @media (max-width: 760px) {
-      .ai-benefit-section { padding: 38px 0; }
       .panel-shell { width: min(100% - 24px, 1480px); padding: 30px 18px; border-radius: 24px; }
       .section-kicker { font-size: 0.72rem; letter-spacing: 0.14em; gap: 10px; justify-content: center; text-align: center;margin-bottom:0; }
       .section-kicker::before,
       .section-kicker::after { width: 18px; }
-      h2 { font-size: 25px; text-align: center; }
+      h2 { font-size: 25px !important; text-align: center; }
       .intro-copy { text-align: center; font-size: 0.98rem; }
       .quick-gains,
       .gain-cards,
@@ -2641,7 +2645,7 @@ Used for AI email reply drafting, automatic responses to inbound enquiries, and 
       <div class="top-layout">
         <div class="left-copy">
           <div class="section-kicker">Why teams choose AI email automation</div>
-          <h2>Use AI to write email replies <span class="accent">faster, better,</span> and more consistently—without giving up control.</h2>
+          <h2 class="section-title">Use AI to write email replies <span class="accent">faster, better,</span> and more consistently—without giving up control.</h2>
           <p class="intro-copy">
             The biggest benefit is not “automation” by itself. It is output multiplication. The same team can stay more responsive, handle more conversations, improve lead response speed, and maintain better consistency without adding reply fatigue.
           </p>
